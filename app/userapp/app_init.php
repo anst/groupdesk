@@ -7,6 +7,6 @@
 	// App Id: https://help.userapp.io/customer/portal/articles/1322336-how-do-i-find-my-app-id-
 	// Token: https://help.userapp.io/customer/portal/articles/1364103-how-do-i-create-an-api-token-
 
-	User::setAppId("YOUR-USERAPP-APP-ID");
+	User::setAppId("5399dedbe3412");
 
 ?>
