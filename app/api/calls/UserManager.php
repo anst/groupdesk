@@ -14,7 +14,7 @@ class UserManager {
             
             $type = isset($_GET["type"]) ? $_GET["type"] : 0;
             
-            $user = User::create($name, $pass, $first, $last, $school, $email, $type);
+            $user = User::create($email,$pass, $first, $last, $school, $type);
             if(isset($user)) {
                 echo User::id($user->insert())->json(true);
             } else
@@ -23,11 +23,13 @@ class UserManager {
         
         $app->route("/api/login", function($app) {
             $user = User::login($_GET["email"], $_GET["password"]);
-            echo is_null($user) ? "null" : $user->json(true);
+            //echo is_null($user) ? "null" : $user->json(true);
+            header("Location: /");
         });
         
         $app->route("/api/logout", function($app) {
-            echo User::logout() ? "true" : "false";
+            User::logout();
+            header("Location: /");
         });
         
         $app->route("/api/user/current", function($app) {

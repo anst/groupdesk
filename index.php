@@ -6,13 +6,14 @@ $app = new app('app');
 
 $app->route('/', function($app) {
 	$user = User::current(); 
+	$user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
 		if($user["Type"] == 1) {
-			return $app->render("teachers_app.html",[]);
+			return $app->render("teachers_app.html",$user->toArray());
 		} else {
-			return $app->render("students_app.html",[]);
+			return $app->render("students_app.html",$user->toArray());
 		}
 
 	}
@@ -32,10 +33,6 @@ $app->route('/teachers', function($app) {
 
 $app->route('/students', function($app) { 
 	return $app->render("students.html",[]);
-});
-
-$app->route('/students_app', function($app) { 
-  return $app->render("students_app.html",[]);
 });
 
 $app->route('/teachers_app', function($app) { 

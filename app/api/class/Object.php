@@ -259,6 +259,9 @@ class Object implements ArrayAccess, JsonSerializable {
     public function getTable() {
         return null;
     }
+    public function toArray() {
+        return $this->jsonSerialize();
+    }
 
     public function jsonSerialize() {
         return array_merge($this->data, $this->ref);

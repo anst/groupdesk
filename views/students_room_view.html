@@ -34,7 +34,7 @@
             <li class="active">
               <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
               <h4>
-              Name Here
+              <?php echo $FirstName;?> <?php echo $LastName;?>
               <br>
               <small>Preferences <span class="caret"></span></small>
               </h4>
@@ -43,7 +43,7 @@
                 <ul class="nav nav-list">
                   <li><a href="#">Profile</a></li>
                   <li><a href="#">Edit Account</a></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="/api/logout">Logout</a></li>
                 </ul>
               </div>
             </li>
