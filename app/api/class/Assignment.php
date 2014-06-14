@@ -28,12 +28,26 @@ class Assignment extends Object {
         );
     }
     
+    public static function create($creator, $name, $desc, $dueDate = null) {
+        return new Assignment(array(
+           "Name" => $name,
+           "TeacherID" => $creator,
+           "CreationDate" => date("Y-m-d H:i:s"),
+            "DueDate" => $dueDate,
+            "Description" => $desc
+        ));
+    }
+    
     public static function all() {
         return Object::allFromTable("assignments", false, false, "Assignment");
     }
     
     public static function id($id) {
         return Object::fromTable("assignments", "ID", $id, "Assignment");
+    }
+    
+    public function getTable() {
+        return "assignments";
     }
 }
 
