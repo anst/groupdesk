@@ -206,3 +206,7 @@ max-height:190px;
   text-overflow: ellipsis;
   display: inline-block;
 }
+
+.powered-by-firepad {
+  display:none;
+}
