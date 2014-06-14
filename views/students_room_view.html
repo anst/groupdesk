@@ -10,7 +10,10 @@
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/"><h3 style="font-family: 'Lobster', cursive;text-spacing:2px;margin-top:-5px">GroupDesk</h3></a>
+          <a class="navbar-brand" href="/"><h3 style="font-family: 'Lobster', cursive;text-spacing:2px;margin-top:-5px">GroupDesk</h3></a> 
+          <ul class="nav navbar-nav navbar-left">
+            <li style="line-height:60px;font-weight:bold"> &dash;&nbsp;&nbsp; Room: <span style="background:rgba(0,0,0,0.1);border-radius:2px; padding:10px;color:rgba(255,255,255,0.8);box-shadow:0 1px 0 0px rgba(255,255,255,0.15)">dat_roomname</span></li>
+          </ul>
 
         </div>
               <div class="navbar-collapse collapse">
@@ -19,7 +22,8 @@
     <div class="row affix-row">
     <?php require_once 'student_sidebar.html'; ?>
     <div class="col-md-10 affix-content">
-      <div class="row" style="margin-top:20px;">
+      <div class="row" style="margin-top:20px;margin-bottom:20px;margin-right:2px;text-align:right;"><a class="btn btn-danger" href="/api/room/removestudent" role="button">Leave Room</a></div>
+        <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -49,7 +53,7 @@
                 <form action="">
                   <div class="row">
                     <div class="col-md-10">
-                      <input type="text" class="form-control" name="posttext" id="todoText" placeholder="Add important announcments or comments.">
+                      <input type="text" class="form-control" name="posttext" id="todoText" placeholder="Add important tasks.">
                     </div>
                     <div class="col-md-2">                  
                       <div style="text-align:left;margin-left:-10px"><a href="#" id="addTodo" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></a></div>
@@ -71,7 +75,7 @@
               <div id="" style="overflow-y: scroll; height:400px;padding-right:17px;">
                 <div class="list-group">
                   <a href="#" class="list-group-item active">
-                    <span class="snip"><i class="glyphicon glyphicon-file"></i><b>&nbsp;&nbsp;&nbsp;Main Essay </b><br><a id="main-essay-download-button" href="#" class="btn btn-success btn-xs btn-block"><i class="glyphicon glyphicon-download"></i>&nbsp; Download</a> </span>
+                    <span class="snip"><i class="glyphicon glyphicon-file"></i><b>&nbsp;&nbsp;&nbsp;Main File </b><br><a id="main-essay-download-button" href="#" class="btn btn-success btn-xs btn-block"><i class="glyphicon glyphicon-download"></i>&nbsp; Download</a> </span>
                   </a>
                   <br>
                   <a href="#" class="list-group-item"><i class="glyphicon glyphicon-plus"></i><b>&nbsp;&nbsp;&nbsp;Add New File</b></a>
@@ -96,7 +100,78 @@
               <h3 class="panel-title"><i class="glyphicon glyphicon-edit"></i><b>&nbsp;&nbsp;&nbsp;Collaborative Editing</b></h3>
             </div>
             <div class="panel-body">
-                <div id="firepad"></div>
+
+                 <div id="firepad"></div>
+
+                <script>
+                  //// Initialize Firebase.
+                  // TODO: Replace above line with:
+                  var firepadRef = new Firebase('https://schollab.firebaseio.com/firepads/'+ location.href.replace('#','').split('/')[location.href.replace('#','').split('/').length-1]);
+
+                  //// Create CodeMirror (with lineWrapping on).
+                  var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+                  var userId = Math.floor(Math.random() * 9999999999).toString();
+
+                  //// Create Firepad (with rich text toolbar and shortcuts enabled).
+                  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+                      { richTextToolbar: true, richTextShortcuts: true });
+                  
+                   var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
+                   document.getElementById('userlist'), userId);
+                  //// Initialize contents.
+                  firepad.on('ready', function() {
+                    if (firepad.isHistoryEmpty()) {
+                      firepad.setHtml(
+                          '<span style="font-size: 24px;">Edit documents with your partners on <span style="color: red">GroupDesk</span>.</span>');
+                    }
+                  });
+
+                  // An example of a complex custom entity.
+                  firepad.registerEntity('checkbox', {
+                    render: function (info, entityHandler) {
+                      var inputElement = document.createElement('input');
+                      inputElement.setAttribute('type', 'checkbox');
+                      if(info.checked) {
+                        inputElement.checked = 'checked';
+                      }
+                      inputElement.addEventListener('click', function () {
+                        entityHandler.replace({checked:this.checked});
+                      });
+                      return inputElement;
+                    }.bind(this),
+                    fromElement: function (element) {
+                      var info = {};
+                      if(element.hasAttribute('checked')) {
+                        info.checked = true;
+                      }
+                      return info;
+                    },
+                    update: function (info, element) {
+                      if (info.checked) {
+                        element.checked = 'checked';
+                      } else {
+                        element.checked = null;
+                      }
+                    },
+                    export: function (info) {
+                      var inputElement = document.createElement('checkbox');
+                      if(info.checked) {
+                        inputElement.setAttribute('checked', true);
+                      }
+                      return inputElement;
+                    }
+                  });
+                  
+                  $("#main-essay-download-button").click(function () {
+                    $.get( "/api/convert", { name: "Test", data: firepad.getHtml() }, function( data ) {
+                        window.location.href = data;
+                    });
+                  });
+                  
+                  $(".firepad-userlist-name-input").prop('disabled', true);
+                  $(".firepad-userlist-name-input").val("<?php echo $FirstName;?> <?php echo $LastName;?>");
+                  
+                </script>
             </div>
         </div>            
         </div>
@@ -125,104 +200,5 @@
         </div>
       </div>
     </div>
-    <script>
-    //// Initialize Firebase.
-    // TODO: Replace above line with:
-    var firepadRef = new Firebase('https://schollab.firebaseio.com/firepads/test');
-
-    //// Create CodeMirror (with lineWrapping on).
-    var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
-
-    // Create a random ID to use as our user ID (we must give this to firepad and FirepadUserList).
-    var userId = Math.floor(Math.random() * 9999999999).toString();
-
-    //// Create Firepad (with rich text features and our desired userId).
-    var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-    { richTextToolbar: true, richTextShortcuts: true, userId: userId});
-
-    //// Create FirepadUserList (with our desired userId).
-    var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
-    document.getElementById('userlist'), userId);
-
-    //// Initialize contents.
-    firepad.on('ready', function() {
-    if (firepad.isHistoryEmpty()) {
-    firepad.setHtml(
-      '<span style="font-size: 24px;">Rich-text editing with <span style="color: red">Firepad!</span></span><br/>\n' +
-      '<br/>' +
-      '<div style="font-size: 18px">' +
-      'Supports:<br/>' +
-      '<ul>' +
-        '<li>Different ' +
-          '<span style="font-family: impact">fonts,</span>' +
-          '<span style="font-size: 24px;"> sizes, </span>' +
-          '<span style="color: blue">and colors.</span>' +
-        '</li>' +
-        '<li>' +
-          '<b>Bold, </b>' +
-          '<i>italic, </i>' +
-          '<u>and underline.</u>' +
-        '</li>' +
-        '<li>Lists' +
-          '<ol>' +
-            '<li>One</li>' +
-            '<li>Two</li>' +
-          '</ol>' +
-        '</li>' +
-        '<li>Undo / redo</li>' +
-        '<li>Cursor / selection synchronization.</li>' +
-        '<li><checkbox></checkbox> It supports customized entities.</li>' +
-        '<li>And it\'s all fully collaborative!</li>' +
-      '</ul>' +
-      '</div>');
-    }
-    });
-
-    // An example of a complex custom entity.
-    firepad.registerEntity('checkbox', {
-    render: function (info, entityHandler) {
-    var inputElement = document.createElement('input');
-    inputElement.setAttribute('type', 'checkbox');
-    if(info.checked) {
-    inputElement.checked = 'checked';
-    }
-    inputElement.addEventListener('click', function () {
-    entityHandler.replace({checked:this.checked});
-    });
-    return inputElement;
-    }.bind(this),
-    fromElement: function (element) {
-    var info = {};
-    if(element.hasAttribute('checked')) {
-    info.checked = true;
-    }
-    return info;
-    },
-    update: function (info, element) {
-    if (info.checked) {
-    element.checked = 'checked';
-    } else {
-    element.checked = null;
-    }
-    },
-    export: function (info) {
-    var inputElement = document.createElement('checkbox');
-    if(info.checked) {
-    inputElement.setAttribute('checked', true);
-    }
-    return inputElement;
-    }
-    });
-
-    $("#main-essay-download-button").click(function () {
-        $.get( "/api/convert", { name: "Test", data: firepad.getHtml() }, function( data ) {
-        window.location.href = data;
-        });
-    });
-    
-    $(".firepad-userlist-name-input").prop('disabled', true);
-    $(".firepad-userlist-name-input").val("<?php echo $FirstName;?> <?php echo $LastName;?>");
-    
-    </script>
   </body>
 </html>
