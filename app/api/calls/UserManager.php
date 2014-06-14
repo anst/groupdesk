@@ -11,7 +11,7 @@ class UserManager {
             $last = $_GET["last"];
             $school = $_GET["school"];
             $email = $_GET["email"];
-            $groupID = $_GET["group"];
+            $groupID = isset($_GET["group"]) ? $_GET["group"] : null;
             
             $type = isset($_GET["type"]) ? $_GET["type"] : 0;
             
@@ -20,9 +20,11 @@ class UserManager {
             
             User::loginCurrent($user_res);
             
-            $group = Group::id($groupID);
-            if(!is_null($group))
-                $group->addIndirect("Students", $user_res);
+            if(!is_null($groupID)) {
+                $group = Group::id($groupID);
+                if(!is_null($group))
+                    $group->addIndirect("Students", $user_res);
+            }
             
             header("Location: /");
         });

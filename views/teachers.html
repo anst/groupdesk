@@ -38,11 +38,13 @@
           <div class="inner cover" style="background: rgba(255,255,255,0.2); padding: 10px; margin-bottom: 20px;">
             <h2 class="cover-heading">Teacher Sign Up </h2>
             <hr style="border-color: black;opacity:.2">
-            <form class="form-signin" role="form" style="opacity:.8">
-              <input type="text" name="name" class="form-control top" placeholder="Full Name" required autofocus>
-              <input id="autoschool"type="text" name="school" class="form-control bottom" placeholder="School" required>
+            <form class="form-signin" action="/api/register" role="form" style="opacity:.8">
+              <input type="text" name="first" class="form-control top" placeholder="First Name" required autofocus>
+              <input type="text" name="last" class="form-control bottom" placeholder="Last Name" required>
+              <input id="autoschool" type="text" name="school" class="form-control bottom" placeholder="School" required>
               <input type="email" name="email" class="form-control" placeholder="Email address" required>
               <input type="password" name="password" class="form-control" placeholder="Password" required>
+              <input type="hidden" name="type" value="1">
               <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
             </form>
           </div>
