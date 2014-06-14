@@ -4,8 +4,18 @@ require_once dirname(__FILE__) . '/app/api/autoloader.php';
 
 $app = new app('app');
 
-$app->route('/', function($app) { 
-	return $app->render("home.html",[]);
+$app->route('/', function($app) {
+	$user = User::current(); 
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			return $app->render("teachers_app.html",[]);
+		} else {
+			return $app->render("students_app.html",[]);
+		}
+
+	}
 });
 
 $app->route('/about', function($app) { 

@@ -4,7 +4,7 @@ USE `schollab`;
 --
 -- Host: localhost    Database: schollab
 -- ------------------------------------------------------
--- Server version	5.6.14
+-- Server version 5.6.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,6 +28,7 @@ CREATE TABLE `announcements` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Title` varchar(50) NOT NULL DEFAULT 'Default',
   `Content` longtext NOT NULL,
+  `UserID` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,27 +43,51 @@ LOCK TABLES `announcements` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `announcements_assignments`
+-- Table structure for table `announcements_groups`
 --
 
-DROP TABLE IF EXISTS `announcements_assignments`;
+DROP TABLE IF EXISTS `announcements_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `announcements_assignments` (
-  `ID` int(11) NOT NULL,
-  `AnnouncementID` int(11) DEFAULT NULL,
-  `AssignmentID` int(11) DEFAULT NULL,
+CREATE TABLE `announcements_groups` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `AnnouncementID` int(11) NOT NULL,
+  `GroupID` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `announcements_assignments`
+-- Dumping data for table `announcements_groups`
 --
 
-LOCK TABLES `announcements_assignments` WRITE;
-/*!40000 ALTER TABLE `announcements_assignments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `announcements_assignments` ENABLE KEYS */;
+LOCK TABLES `announcements_groups` WRITE;
+/*!40000 ALTER TABLE `announcements_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `announcements_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `announcements_rooms`
+--
+
+DROP TABLE IF EXISTS `announcements_rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `announcements_rooms` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `AnnouncementID` int(11) NOT NULL,
+  `RoomID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `announcements_rooms`
+--
+
+LOCK TABLES `announcements_rooms` WRITE;
+/*!40000 ALTER TABLE `announcements_rooms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `announcements_rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -76,11 +101,11 @@ CREATE TABLE `assignments` (
   `ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `CreationDate` datetime DEFAULT NULL,
-  `DueDate` datetime NOT NULL,
+  `CreationDate` datetime NOT NULL,
+  `DueDate` datetime DEFAULT NULL,
   `Description` longtext NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +114,7 @@ CREATE TABLE `assignments` (
 
 LOCK TABLES `assignments` WRITE;
 /*!40000 ALTER TABLE `assignments` DISABLE KEYS */;
-INSERT INTO `assignments` VALUES (1,'Bobby',1,'2014-06-13 19:54:07','2014-06-13 19:54:07','Hello!'),(2,'Bobby',1,'2014-06-13 19:54:21','2014-06-13 19:54:21','Hello!');
+INSERT INTO `assignments` VALUES (1,'Bobby',1,'2014-06-13 19:54:07','2014-06-13 19:54:07','Hello!'),(2,'Bobby',4,'2014-06-13 19:54:21','2014-06-13 19:54:21','Hello!'),(3,'Billy',21,'0000-00-00 00:00:00','0000-00-00 00:00:00','K.');
 /*!40000 ALTER TABLE `assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +126,7 @@ DROP TABLE IF EXISTS `assignments_students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `assignments_students` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `StudentID` int(11) NOT NULL DEFAULT '-1',
   `AssignmentID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`ID`)
@@ -125,7 +150,7 @@ DROP TABLE IF EXISTS `files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `files` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
   `Location` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
@@ -154,7 +179,7 @@ CREATE TABLE `groups` (
   `Title` varchar(45) NOT NULL,
   `Description` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +188,7 @@ CREATE TABLE `groups` (
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (2,'4','Hello','Goodbye'),(3,'4','New Title','Nope'),(4,'4','Hello','Goodbye'),(5,'4','Hello','Goodbye'),(7,'4','Hello','Goodbye');
+INSERT INTO `groups` VALUES (2,'4','Hello','Goodbye'),(3,'4','New Title','Nope'),(4,'4','Hello','Goodbye'),(5,'4','Hello','Goodbye'),(7,'4','Hello','Goodbye'),(8,'21','Nope','Yep');
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +230,7 @@ CREATE TABLE `rooms` (
   `Name` varchar(45) NOT NULL DEFAULT '[Not Named]',
   `AssignmentID` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,6 +239,7 @@ CREATE TABLE `rooms` (
 
 LOCK TABLES `rooms` WRITE;
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+INSERT INTO `rooms` VALUES (1,'Hello',0),(2,'Bobby',1),(4,'Bobby',1);
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,11 +251,11 @@ DROP TABLE IF EXISTS `rooms_students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rooms_students` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `RoomID` int(11) NOT NULL DEFAULT '-1',
   `UserID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,6 +264,7 @@ CREATE TABLE `rooms_students` (
 
 LOCK TABLES `rooms_students` WRITE;
 /*!40000 ALTER TABLE `rooms_students` DISABLE KEYS */;
+INSERT INTO `rooms_students` VALUES (1,2,20),(2,2,12);
 /*!40000 ALTER TABLE `rooms_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,30 +293,6 @@ LOCK TABLES `students_teachers` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `test`
---
-
-DROP TABLE IF EXISTS `test`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `test` (
-  `number` int(11) NOT NULL,
-  `testcol` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `test`
---
-
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` VALUES (3,'4');
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
@@ -303,6 +306,9 @@ CREATE TABLE `users` (
   `Type` int(11) NOT NULL DEFAULT '0',
   `CreatedDate` datetime NOT NULL,
   `Email` varchar(60) DEFAULT NULL,
+  `FirstName` varchar(45) NOT NULL,
+  `LastName` varchar(45) NOT NULL,
+  `School` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -313,7 +319,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'bobby','smith',0,'2014-06-14 02:42:52',NULL),(2,'bobby','smith',0,'2014-06-14 02:43:09',NULL),(3,'bobby','smith',0,'2014-06-14 02:43:09',NULL),(4,'bobby','smith',1,'2014-06-14 02:43:10',NULL),(5,'bobby','smith',0,'2014-06-14 02:43:10',NULL),(6,'bobby','smith',0,'2014-06-14 02:43:10',NULL),(7,'bobby','smith',0,'2014-06-14 02:43:10',NULL),(8,'bobby','smith',0,'2014-06-14 02:43:10',NULL),(9,'bobby','smith',0,'2014-06-14 02:43:11',NULL),(10,'bobby','smith',0,'2014-06-14 02:43:11',NULL),(11,'bobby','smith',0,'2014-06-14 02:43:11',NULL),(12,'bobby','smith',0,'2014-06-14 02:43:13',NULL),(13,'bobby','smith',0,'2014-06-14 02:43:13',NULL),(14,'bobby','smith',0,'2014-06-14 02:43:13',NULL),(15,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(16,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(17,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(18,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(19,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(20,'bobby','smith',0,'2014-06-14 02:43:14',NULL),(21,'blacksmithgu','hello',1,'2014-06-14 05:09:10',NULL);
+INSERT INTO `users` VALUES (1,'bobby','smith',0,'2014-06-14 02:42:52',NULL,'','',NULL),(2,'bobby','smith',0,'2014-06-14 02:43:09',NULL,'','',NULL),(3,'bobby','smith',0,'2014-06-14 02:43:09',NULL,'','',NULL),(4,'bobby','smith',1,'2014-06-14 02:43:10',NULL,'','',NULL),(5,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(6,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(7,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(8,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(9,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(10,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(11,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(12,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(13,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(14,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(15,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(16,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(17,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(18,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(19,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(20,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(21,'blacksmithgu','hello',1,'2014-06-14 05:09:10',NULL,'','',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-14  1:10:07
+-- Dump completed on 2014-06-14  3:18:38
