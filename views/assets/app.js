@@ -5,6 +5,7 @@ $( document ).ready(function() {
 ROOM_ID = location.href.replace('#','').split('/')[location.href.replace('#','').split('/').length-1];
 var announcements = new Firebase('https://schollab.firebaseio.com/announcement_'+ROOM_ID);
 var todo = new Firebase('https://schollab.firebaseio.com/todo_'+ROOM_ID);
+var chat = new Firebase('https://schollab.firebaseio.com/chat_'+ROOM_ID);
 
 $("#postAnnouncement").click(function() {
 	var msg = $('#announcementText').val();
@@ -24,6 +25,20 @@ announcements.on('child_added', function (snapshot) {
                     </div>\
                   </div>');
 	$('#announcements')[0].scrollTop = $('#announcements')[0].scrollHeight;
+});
+
+
+$("#sendMessage").click(function() {
+	var msg = $('#messageText').val();
+	var name = $('#fullname').text();
+	chat.push({name:name, text:msg});
+	$('#messageText').val('');
+});
+
+chat.on('child_added', function (snapshot) {
+	var message = snapshot.val();
+	$('#messages').append('<div class="panel panel-default" style="background: rgba(0,0,0,0.03)"><div class="panel-body"><b>'+message.name+': </b>'+message.text+'</div>');
+	$('#messages')[0].scrollTop = $('#messages')[0].scrollHeight;
 });
 
 
