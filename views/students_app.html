@@ -50,20 +50,22 @@
             <?php
                 $index = 1;
                 foreach($Groups as $group) {
+                    if(is_null($group)) continue;
+                    $gid = $group["ID"];
+                    $uid = $ID;
                     echo '<li>';
                     echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
                     echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span>';
                     echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
                             <ul class="nav nav-list">
-                                <li><a href="#">View Projects</a></li>
-                                <li><a href="#">Leave Group</a></li>
+                                <li><a href="/class/' . $gid . '">View Projects</a></li>
+                                <li><a href="/api/group/removestudent?id=' . $gid . '&student=' . $uid . '">Leave Group</a></li>
                             </ul>
                           </div>
                           </li>';
                     $index++;
                 }
             ?>
-            <!-- asdf -->
           </ul>
           
           </div><!--/.nav-collapse -->
@@ -77,10 +79,13 @@
         </div>
         
         <div class="row">
-          <!-- asdf -->
-        <?php
-            foreach($Groups as $group) {
-                echo '<div class="col-sm-3">
+            <?php
+                foreach($Groups as $group) {
+                    if(is_null($group)) continue;
+                    $gid = $group["ID"];
+                    $uid = $ID;
+                    echo '
+                    <div class="col-sm-3">
                         <div class="tile-progress tile-cyan">
                           <div class="tile-header">
                             <h3 class="snip">' . $group["Title"] . '</h3>
@@ -90,12 +95,12 @@
                           </div>
                           <div class="tile-footer" style="text-align:right">
                             <a href="#" class="btn btn-sm btn-primary tile-edit">View</a>
-                            <a href="#" class="btn btn-sm btn-danger tile-delete">Leave Group</a>
+                            <a href="/api/group/removestudent?id=' . $gid . '&student=' . $uid . '" class="btn btn-sm btn-danger tile-delete">Leave Group</a>
                           </div>
                         </div>
                       </div>';
-            }
-        ?>
+                }
+            ?>
               </div>
             </div>
           </div>

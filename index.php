@@ -5,11 +5,11 @@ require_once dirname(__FILE__) . '/app/api/autoloader.php';
 $app = new app('app');
 
 $app->route('/', function($app) {
-	$user = User::current(); 
+        $user = User::current(); 
+        if(!is_null($user)) $user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
-                $user->resolve();
 		if($user["Type"] == 1) {
 			return $app->render("teachers_app.html", $user->toArray());
 		} else {
@@ -36,8 +36,8 @@ $app->route('/students', function($app) {
 });
 
 $app->route('/room/<string>', function($app, $roomid) {
-	$user = User::current(); 
-	$user->resolve();
+        $user = User::current(); 
+        if(!is_null($user)) $user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
@@ -51,8 +51,8 @@ $app->route('/room/<string>', function($app, $roomid) {
 });
 
 $app->route('/class/<string>', function($app, $classid) { 
-	$user = User::current(); 
-	$user->resolve();
+        $user = User::current(); 
+        if(!is_null($user)) $user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {

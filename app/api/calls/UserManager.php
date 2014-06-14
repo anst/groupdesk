@@ -15,16 +15,18 @@ class UserManager {
             $type = isset($_GET["type"]) ? $_GET["type"] : 0;
             
             $user = User::create($email,$pass, $first, $last, $school, $type);
-            if(isset($user)) {
-                echo User::id($user->insert())->json(true);
-            } else
-                echo "null";
+            $user->insert();
+            
+            User::loginCurrent($user);
+            header("Location: /");
         });
         
         $app->route("/api/login", function($app) {
             $user = User::login($_GET["email"], $_GET["password"]);
-            //echo is_null($user) ? "null" : $user->json(true);
-            header("Location: /");
+            if(is_null($user))
+                header("Location: /login");
+            else
+                header("Location: /");
         });
         
         $app->route("/api/logout", function($app) {

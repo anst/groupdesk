@@ -14,10 +14,12 @@ class GroupManager {
             
             $group = Group::create($creator, $title, $desc);
             
-            if(isset($group))
+            header('Location: /');
+            
+            /*if(isset($group))
                 echo Group::id($group->insert())->json(true);
             else
-                echo "null";
+                echo "null";*/
         });
         
         $app->route("/api/group/delete", function($app) {
@@ -28,7 +30,7 @@ class GroupManager {
             
             echo Database::last();
             
-            echo "true";
+            header("Location: /");
         });
         
         $app->route("/api/group/update", function($app) {

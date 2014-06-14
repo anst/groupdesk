@@ -100,15 +100,25 @@ class Object implements ArrayAccess, JsonSerializable {
                     $this->setSneaky($relationship["name"], array());
                     continue;
                 }
-                foreach($obj as $key => $value)
+                foreach($obj as $key => $value) {
+                    if(is_null($value)) continue;
                     $value->resolve($depth - 1);
+                }
                 $this->setSneaky($relationship["name"], $obj);
             }
             else if($relationship["type"] === "Indirect") {
                 $obj = static::grabJoinObject($relationship, $this[$relationship["local"]["key"]], $relationship["remote"]["type"]);
 
-                foreach($obj as $value)
+                if(is_null($obj)) {
+                    $this->setSneaky($relationship["name"], array());
+                    continue;
+                }
+                
+                foreach($obj as $value) {
+                    if(is_null($value)) continue;
                     $value->resolve($depth - 1);
+                }
+                
                 $this->setSneaky($relationship["name"], $obj);
                 break;
             } else {

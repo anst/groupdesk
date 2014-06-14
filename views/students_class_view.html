@@ -47,28 +47,25 @@
                 </ul>
               </div>
             </li>
-            <li>
-              <a href="#" data-toggle="collapse" data-target="#toggleDemo1" data-parent="#sidenav01" class="collapsed">
-              <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;First Period AP US History<span class="caret pull-right"></span>
-              </a>
-              <div class="collapse" id="toggleDemo1" style="height: 0px;">
-                <ul class="nav nav-list">
-                  <li><a href="#">View Projects</a></li>
-                  <li><a href="#">Leave Group</a></li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <a href="#" data-toggle="collapse" data-target="#toggleDemo2" data-parent="#sidenav02" class="collapsed">
-              <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;1337th Period Computer Science<span class="caret pull-right"></span>
-              </a>
-              <div class="collapse" id="toggleDemo2" style="height: 0px;">
-                <ul class="nav nav-list">
-                  <li><a href="#">View Projects</a></li>
-                  <li><a href="#">Leave Group</a></li>
-                </ul>
-              </div>
-            </li>
+            <?php
+                $index = 1;
+                foreach($Groups as $group) {
+                    if(is_null($group)) continue;
+                    $gid = $group["ID"];
+                    $uid = $ID;
+                    echo '<li>';
+                    echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
+                    echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span>';
+                    echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
+                            <ul class="nav nav-list">
+                                <li><a href="/class/' . $gid . '">View Projects</a></li>
+                                <li><a href="/api/group/removestudent?id=' . $gid . '&student=' . $uid . '">Leave Group</a></li>
+                            </ul>
+                          </div>
+                          </li>';
+                    $index++;
+                }
+            ?>
           </ul>
           
           </div><!--/.nav-collapse -->
