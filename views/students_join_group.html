@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GroupDesk</title>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <?php require_once 'head.html'; ?>
+    <link href="/views/assets/styles_teachers_app.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><h3 style="font-family: 'Lobster', cursive;text-spacing:2px;margin-top:-5px">GroupDesk</h3></a>
+        </div>
+        <div class="navbar-collapse collapse">
+    </div>
+  </div>
+  <div class="row affix-row">
+    <?php require_once 'teacher_sidebar.html'; ?>
+    <div class="col-sm-9 col-md-10 affix-content">
+      <div class="container">
+        <div class="page-header">
+          <h3>Join group</h3>
+        </div>
+        <form class="form" method="GET" action="/api/group/addstudent" role="form">
+          <input id="GroupID" type="text" name="id" class="form-control" placeholder="Group ID" autofocus>
+          <input id="Student" type="hidden" name="student" class="form-control" value="<?php echo $ID?>">
+          <br>
+          <button class="btn btn-sm btn-primary btn-block" type="submit">Create room</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -98,6 +98,20 @@ $app->route('/room/<string>/add', function($app, $assid) {
 	}
 });
 
+$app->route('/class/join', function($app) {
+  $user = User::current(); 
+  if(!is_null($user)) $user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			return $app->render("teachers_app.html", $user->toArray());
+		} else {
+			return $app->render("students_join_group.html", $user->toArray());
+		}
+	}
+});
+
 $app->route('/class/<string>', function($app, $classid) { 
         $user = User::current(); 
         if(!is_null($user)) $user->resolve();
@@ -136,9 +150,6 @@ $app->route('/assignment/<string>', function($app, $assid) {
 	}
 });
 
-$app->route('/wysiwyg', function($app) { 
-  return $app->render("wysiwyg.html",[]);
-});
 
 UserManager::addRoutes($app);
 GroupManager::addRoutes($app);

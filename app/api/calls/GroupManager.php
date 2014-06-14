@@ -61,18 +61,19 @@ class GroupManager {
             $student = User::id($studentId);
             
             if(is_null($group) || is_null($student)) {
-                echo "false";
+                // echo "false";
                 return;
             }
             
             if($group->hasIndirect("Students", $student)) {
-                echo "false";
+                // echo "false";
                 return;
             }
             
             $group->addIndirect("Students", $student);
             
-            echo "true";
+            // echo "true";
+            header("Location: /");
         });
         
         $app->route("/api/group/removestudent", function($app) {
