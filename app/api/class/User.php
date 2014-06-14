@@ -18,11 +18,15 @@ class User extends Object {
     public static $TEACHER = 1;
     public static $ADMIN = 2;
     
-    public static function create($user, $pass, $type = 0) {
+    public static function create($email, $pass, $first, $last, $school, $type = 0) {
         return new User(array(
-            "Username" => $user,
+            "Username" => "Unused",
             "Password" => $pass,
+            "FirstName" => $first,
+            "LastName" => $last,
             "Type" => $type,
+            "Email" => $email,
+            "School" => $school,
             "CreatedDate" => date("Y-m-d H:i:s")
         ));
     }
@@ -45,7 +49,7 @@ class User extends Object {
     }
     
     public static function login($username, $password) {
-        $user = Query::create("User", "users")->where("Username", $username)->where("Password", $password)->single();
+        $user = Query::create("User", "users")->where("Email", $username)->where("Password", $password)->single();
         return static::loginCurrent($user);
     }
     

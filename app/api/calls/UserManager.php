@@ -6,11 +6,15 @@ class UserManager {
 
     public static function addRoutes($app) {
         $app->route("/api/register", function($app) {
-            $name = $_GET["username"];
             $pass = $_GET["password"];
+            $first = $_GET["first"];
+            $last = $_GET["last"];
+            $school = $_GET["school"];
+            $email = $_GET["email"];
+            
             $type = isset($_GET["type"]) ? $_GET["type"] : 0;
             
-            $user = User::create($name, $pass, $type);
+            $user = User::create($name, $pass, $first, $last, $school, $email, $type);
             if(isset($user)) {
                 echo User::id($user->insert())->json(true);
             } else
@@ -18,7 +22,7 @@ class UserManager {
         });
         
         $app->route("/api/login", function($app) {
-            $user = User::login($_GET["username"], $_GET["password"]);
+            $user = User::login($_GET["email"], $_GET["password"]);
             echo is_null($user) ? "null" : $user->json(true);
         });
         
@@ -53,7 +57,7 @@ class UserManager {
             if (is_null($user)) {
                 echo "default.png";
             } else {
-                echo get_gravatar(User::current()->get('email'), $_GET['img']);
+                echo get_gravatar(User::current()['Email'], $_GET['img']);
             }
         });
     }
