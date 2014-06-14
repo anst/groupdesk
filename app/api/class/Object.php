@@ -159,8 +159,10 @@ class Object implements ArrayAccess, JsonSerializable {
     public function update($table = null, $uni = null) {
         $updateCore = "";
         
-        if(is_null($uni)) $table = $this->getUnique();
+        if(is_null($uni)) $uni = $this->getUnique();
         if(is_null($table)) $table = $this->getTable();
+        
+        $uniVal = $this->data[$uni];
         foreach($this->data as $key => $value)
         {
             if(strcmp($key, $uni) == 0) continue; // Disallow updating the PK

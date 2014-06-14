@@ -46,7 +46,6 @@ class User extends Object {
     
     public static function login($username, $password) {
         $user = Query::create("User", "users")->where("Username", $username)->where("Password", $password)->single();
-        echo Database::last();
         return static::loginCurrent($user);
     }
     
@@ -75,6 +74,21 @@ class User extends Object {
                         "key" => "ID",
                         "table" => "groups",
                         "type" => "Group"
+                    )
+                ),
+                "Rooms" => array(
+                    "type" => "Indirect",
+                    "local" => array("key" => "ID"),
+                    "name" => "Rooms",
+                    "join" => array(
+                        "localkey" => "UserID",
+                        "remotekey" => "RoomID",
+                        "table" => "rooms_students"
+                    ),
+                    "remote" => array(
+                        "key" => "ID",
+                        "table" => "rooms",
+                        "type" => "Room"
                     )
                 )
             );
