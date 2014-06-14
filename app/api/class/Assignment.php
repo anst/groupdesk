@@ -24,6 +24,16 @@ class Assignment extends Object {
                     "table" => "users",
                     "type" => "Object"
                 )
+            ),
+            "Rooms" => array(
+                "type" => "Direct-Children",
+                "name" => "Rooms",
+                "key" => "ID",
+                "target" => array(
+                    "table" => "rooms",
+                    "type" => "Room",
+                    "key" => "AssignmentID"
+                )
             )
         );
     }

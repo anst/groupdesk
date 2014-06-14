@@ -12,7 +12,42 @@
  */
 class Room extends Object {
     public function getRelationships() {
-        return parent::getRelationships();
+         return [
+             "Students" => [
+                "name" => "Students",
+                "type" => "Indirect",
+                "local" => [
+                    "key" => "ID"
+                ],
+                "join" => [
+                    "localkey" => "RoomID",
+                    "remotekey" => "UserID",
+                    "table" => "rooms_students"
+                ],
+                "remote" => [
+                    "key" => "ID",
+                    "table" => "users",
+                    "type" => "User"
+                ]
+            ],
+            "Assignment" => [
+                "name" => "Assignments",
+                "type" => "Direct-Parent",
+                "key" => "AssignmentID",
+                "target" => [
+                    "table" => "assignments",
+                    "type" => "Assignment",
+                    "key" => "ID"
+                ]
+            ]
+         ];
+    }
+    
+    public static function create($name, $assignment) {
+        return new Room([
+            "Name" => $name,
+            "AssignmentID" => $assignment["ID"]
+        ]);
     }
     
     public static function all() {
@@ -20,7 +55,11 @@ class Room extends Object {
     }
     
     public static function id($id) {
-        return Object::allFromTable("rooms", "ID", $id, "Room");
+        return Object::fromTable("rooms", "ID", $id, "Room");
+    }
+    
+    public function getTable() {
+        return "rooms";
     }
 }
 

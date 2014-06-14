@@ -41,6 +41,7 @@ $app->route('/wysiwyg', function($app) {
 UserManager::addRoutes($app);
 GroupManager::addRoutes($app);
 MashapeManager::addRoutes($app);
+RoomManager::addRoutes($app);
 
 $app->run();
 ?>
