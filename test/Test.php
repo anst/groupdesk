@@ -1,12 +1,15 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/app/api/class/Object.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/app/api/class/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/app/api/class/Group.php');
 
 echo "<p>This is a test page.</p>";
 
-$object = Object::fromTable("test");
-echo isset($object) ? "<p>yes</p>" : "<p>no</p>";
-echo $object->json();
+$object = User::all();
+foreach($object as $user) {
+    $user->resolve();
+    echo '<p>' . $user->json(true) . '</p>';
+}
 
 echo "<p>continuing on.</p>";
 ?>
