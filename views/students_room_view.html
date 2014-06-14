@@ -34,7 +34,7 @@
             <li class="active">
               <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
               <h4>
-              <?php echo $FirstName;?> <?php echo $LastName;?>
+              <span id="fullname"><?php echo $FirstName;?> <?php echo $LastName;?></span>
               <br>
               <small>Preferences <span class="caret"></span></small>
               </h4>
@@ -77,64 +77,15 @@
         <div class="col-md-8">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title"><b>Announcement Stream</b></h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-question-sign"></i><b>&nbsp;&nbsp;&nbsp;Announcement Stream</b></h3>
               </div>
               <div class="panel-body">
-                <div id="" style="overflow-y: scroll; height:400px;padding-right:15px;">
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <legend>
-                        <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h5>
-                      </legend>
-                      So how does this thing work??? lel
-                    </div>
-                  </div>
-
+                <div id="announcements" style="overflow-y: scroll; height:400px;padding-right:15px;">
                 </div><br>
                 <legend></legend>
                 <form action="">
-                  <textarea class="form-control" name="posttext" style="resize:vertical;"placeholder="Add important announcments or comments."></textarea>
-                  <div style="margin-top:20px; text-align:right;"><a href="#" class="btn btn-sm btn-success">Post</a></div>
+                  <textarea class="form-control" id="announcementText" name="posttext" style="resize:vertical;"placeholder="Add important announcments or comments."></textarea>
+                  <div style="margin-top:20px; text-align:right;"><a href="#" id="postAnnouncement" class="btn btn-sm btn-success">Post</a></div>
                 </form>
               </div>
             </div>
@@ -142,44 +93,20 @@
         <div class="col-md-4">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title"><b>Task List</b></h3>
+                <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i><b>&nbsp;&nbsp;&nbsp;Task List</b></h3>
               </div>
               <div class="panel-body">
-                <div id="" style="overflow-y: scroll; height:476px;padding-right:15px;">
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <div class="row">
-                        <div class="col-md-8">
-                          self.kill()
-                        </div>
-                        <div class="col-md-4" style="text-align:right;">
-                          <a href="" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></a>&nbsp;&nbsp;<a href="" class="btn btn-danger btn-xs" ><i class="glyphicon glyphicon-remove"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel panel-default" style="background: rgba(0,0,0,0.03)">
-                    <div class="panel-body">
-                      <div class="row">
-                        <div class="col-md-8">
-                          self.kill()
-                        </div>
-                        <div class="col-md-4" style="text-align:right;">
-                          <a href="" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></a>&nbsp;&nbsp;<a href="" class="btn btn-danger btn-xs" ><i class="glyphicon glyphicon-remove"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div id="todoList" style="overflow-y: scroll; height:476px;padding-right:15px;">
 
                 </div><br>
                 <legend></legend>
                 <form action="">
                   <div class="row">
                     <div class="col-md-10">
-                      <input type="text" class="form-control" name="posttext" placeholder="Add important announcments or comments.">
+                      <input type="text" class="form-control" name="posttext" id="todoText" placeholder="Add important announcments or comments.">
                     </div>
                     <div class="col-md-2">                  
-                      <div style="text-align:left;margin-left:-10px"><a href="#" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></a></div>
+                      <div style="text-align:left;margin-left:-10px"><a href="#" id="addTodo" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></a></div>
                     </div>
                   </div>
 
@@ -200,14 +127,14 @@
                   <a href="#" class="list-group-item active">
                     <span class="snip"><i class="glyphicon glyphicon-file"></i><b>&nbsp;&nbsp;&nbsp;Main Essay </b><br><a href="" class="btn btn-success btn-xs btn-block"><i class="glyphicon glyphicon-download"></i>&nbsp; Download</a> </span>
                   </a>
-                  <br>
+                  <!-- <br>
                   <a href="#" class="list-group-item">
                     <span class="snip"><i class="glyphicon glyphicon-file"></i><b>&nbsp;&nbsp;&nbsp;Notes </b><br><a href="" class="btn btn-default btn-xs btn-block"><i class="glyphicon glyphicon-download"></i>&nbsp; Download</a> </span>
                   </a> 
                   <br>
                   <a href="#" class="list-group-item">
                     <span class="snip"><i class="glyphicon glyphicon-file"></i><b>&nbsp;&nbsp;&nbsp;Works Cited </b><br><a href="" class="btn btn-default btn-xs btn-block"><i class="glyphicon glyphicon-download"></i>&nbsp; Download</a> </span>
-                  </a>
+                  </a> -->
                   <br>
                   <a href="#" class="list-group-item"><i class="glyphicon glyphicon-plus"></i><b>&nbsp;&nbsp;&nbsp;Add New File</b></a>
                 </div>
