@@ -15,7 +15,9 @@ class RoomManager {
             }
             
             $room = Room::create($name, $assignment);
-            echo Room::id($room->insert())->json(true);
+            $room->insert();
+
+            header('Location: /assignment/' . $assignmentID);
         });
         
         // Verified working
@@ -29,7 +31,7 @@ class RoomManager {
             }
             
             $room->delete();
-            echo "true";
+            header('Location: /assignment/' . $room["AssignmentID"]);
         });
         
         $app->route("/api/room/addstudent", function($app) {
@@ -50,7 +52,7 @@ class RoomManager {
             }
             
             $room->addIndirect("Students", $student);
-            echo "true";
+            header('Location: /room/' . $id);
         });
         
         $app->route("/api/room/removestudent", function($app) {

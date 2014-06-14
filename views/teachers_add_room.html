@@ -20,14 +20,13 @@
     <div class="col-sm-9 col-md-10 affix-content">
       <div class="container">
         <div class="page-header">
-          <h3>Add new assignment</h3>
+          <h3>Add new room</h3>
         </div>
-        <form class="form" method="GET" action="/api/assignment/create" role="form">
+        <form class="form" method="GET" action="/api/room/create" role="form">
           <input id="Title" type="text" name="name" class="form-control" placeholder="Title" autofocus>
-          <input id="GroupID" type="hidden" name="group" class="form-control" value="<?php echo $classid?>">
-          <input id="Description" type="hidden" name="desc" class="form-control" value="not implemented">
+          <input id="AssignmentID" type="hidden" name="assignment" class="form-control" value="<?php echo $classid?>">
           <br>
-          <button class="btn btn-sm btn-primary btn-block" type="submit">Create assignment</button>
+          <button class="btn btn-sm btn-primary btn-block" type="submit">Create room</button>
         </form>
       </div>
     </div>

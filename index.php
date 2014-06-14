@@ -67,15 +67,32 @@ $app->route('/assignment/<string>/add', function($app, $classid) {
 });
 
 $app->route('/room/<string>', function($app, $roomid) {
-        $user = User::current(); 
-        if(!is_null($user)) $user->resolve();
+  $user = User::current(); 
+  if(!is_null($user)) $user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
 		if($user["Type"] == 1) {
-			return $app->render("teachers_app.html",$user->toArray());
+			return $app->render("students_room_view.html",$user->toArray());
 		} else {
 			return $app->render("students_room_view.html",$user->toArray());
+		}
+
+	}
+});
+
+$app->route('/room/<string>/add', function($app, $assid) {
+  $user = User::current(); 
+  if(!is_null($user)) $user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			$res = $user->toArray();
+			$res["classid"] = $assid;
+			return $app->render("teachers_add_room.html", $res);
+		} else {
+			return $app->render("students_app.html",$user->toArray());
 		}
 
 	}
@@ -87,14 +104,33 @@ $app->route('/class/<string>', function($app, $classid) {
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
+		$res = $user->toArray();
+		$Group = Group::id($classid);
+		$Group->resolve();
+		$res["Group"] = $Group->toArray();
 		if($user["Type"] == 1) {
-			$res = $user->toArray();
-			$Group = Group::id($classid);
-			$Group->resolve();
-			$res["Group"] = $Group->toArray();
 			return $app->render("teachers_class_view.html", $res);
 		} else {
-			return $app->render("students_class_view.html",$user->toArray());
+			return $app->render("students_class_view.html", $res);
+		}
+
+	}
+});
+
+$app->route('/assignment/<string>', function($app, $assid) { 
+        $user = User::current(); 
+        if(!is_null($user)) $user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			$res = $user->toArray();
+			$Assignment = Assignment::id($assid);
+			$Assignment->resolve();
+			$res["Assignment"] = $Assignment->toArray();
+			return $app->render("teachers_assignment_view.html", $res);
+		} else {
+			return $app->render("students_app.html",$user->toArray());//probably replace this later
 		}
 
 	}

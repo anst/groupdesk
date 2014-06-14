@@ -46,6 +46,18 @@
                           </li>';
                     $index++;
                 }
+
+                if(sizeof($Rooms) > 0) {
+                  echo '<li>';
+                  echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
+                  echo '<span class="glyphicon glyphicon-th"></span>      Active Rooms<span class="caret pull-right"></span></a>';
+                  echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
+                            <ul class="nav nav-list">';
+                  foreach($Rooms as $room) {
+                    echo '<li><a href="/room/' . $room["ID"] . '">' . $room["Name"] . '</a></li>';
+                  }
+                  echo "</ul></div></li>";
+                }
             ?>
           </ul>
           

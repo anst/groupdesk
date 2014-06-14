@@ -1,91 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>GroupDesk</title>
-    <!-- Sets initial viewport load and disables zooming  -->
-    <?php require_once 'head.html'; ?>
-    <link href="/views/assets/styles_students_app.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/"><h3 style="font-family: 'Lobster', cursive;text-spacing:2px;margin-top:-5px">GroupDesk</h3></a>
+<head>
+  <meta charset="utf-8">
+  <title>GroupDesk</title>
+  <!-- Sets initial viewport load and disables zooming  -->
+  <?php require_once 'head.html'; ?>
+  <link href="/views/assets/styles_students_app.css" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><h3 style="font-family: 'Lobster', cursive;text-spacing:2px;margin-top:-5px">GroupDesk</h3></a>
 
-        </div>
-              <div class="navbar-collapse collapse">
-      </div>
     </div>
-    <div class="row affix-row">
-      <?php require_once 'student_sidebar.html'; ?>
-      <div class="col-sm-9 col-md-10 affix-content">
-        <div class="container">
-          
-            <div class="page-header">
-      <h3><span class="glyphicon glyphicon-comment"></span> First Period AP US History</h3>
+    <div class="navbar-collapse collapse">
     </div>
-       <form action="">
-        <textarea class="form-control" name="posttext" style="resize:vertical;"placeholder="Post any questions you have here."></textarea>
-        <div style="margin-top:20px; text-align:right;"><a href="#" class="btn btn-success">Post</a></div>
-      </form>
-      <hr>
-      <br>
-
-
-      <div class="well">
-      <legend>
-        <h4><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h4>
-      </legend>
-      <blockquote style="font-size:16px;">So how does this thing work??? lel</blockquote>
-
-      <div class="well well-sm" style="background: rgba(0,0,0,0.1)">
-         <legend>
-          <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Lil B</b> responded:</h5>
-         </legend>
-         <blockquote style="font-size:14px;margin-bottom:0">lol how do you code</blockquote>  
-      </div>
-      <div class="well well-sm" style="background: rgba(0,0,0,0.1)">
-         <legend>
-          <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Lil B</b> responded:</h5>
-         </legend>
-         <blockquote style="font-size:14px;margin-bottom:0">rekt m9</blockquote>  
-      </div>
-      <form action="">
-        <textarea class="form-control" name="posttext" style="resize:vertical;background:rgba(255,255,255,0.4);"placeholder="Respond to this post."></textarea>
-        <div style="margin-top:20px; text-align:right;"><a href="#" class="btn btn-sm btn-success">Post Reply</a></div>
-      </form>
-      </div>
-          
-
-
-      <div class="well">
-      <legend>
-        <h4><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Flavor Flave</b> said:</h4>
-      </legend>
-      <blockquote style="font-size:16px;">So how does this thing work??? lel</blockquote>
-
-      <div class="well well-sm" style="background: rgba(0,0,0,0.1)">
-         <legend>
-          <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Lil B</b> responded:</h5>
-         </legend>
-         <blockquote style="font-size:14px;margin-bottom:0">lol how do you code</blockquote>  
-      </div>
-      <div class="well well-sm" style="background: rgba(0,0,0,0.1)">
-         <legend>
-          <h5><span style="color:gray;font-size:13px;"><i>06/14/14</i>&nbsp;&nbsp;&nbsp;</span><b>Lil B</b> responded:</h5>
-         </legend>
-         <blockquote style="font-size:14px;margin-bottom:0">rekt m9</blockquote>  
-      </div>
-      <form action="">
-        <textarea class="form-control" name="posttext" style="resize:vertical;background:rgba(255,255,255,0.4);"placeholder="Respond to this post."></textarea>
-        <div style="margin-top:20px; text-align:right;"><a href="#" class="btn btn-sm btn-success">Post Reply</a></div>
-      </form>
-      </div>
-
-
-
+  </div>
+  <div class="row affix-row">
+    <?php require_once 'student_sidebar.html'; ?>
+    <div class="col-sm-9 col-md-10 affix-content">
+      <div class="container">
+        <div class="page-header">
+          <h3><?php echo $Group["Title"] ?></h3>
         </div>
+        <?php
+          foreach($Group["Assignments"] AS $assign) {
+            echo "<h3>" . $assign["Name"] . "</h3>";
+            $assign->resolve();
+
+            echo "<table>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>Room Name</th>";
+            echo "<th>Action</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+            foreach($assign["Rooms"] as $room) {
+              $roomcall = "/api/room/addstudent?id=" . $room["ID"] . '&student=' . $ID;
+
+              echo "<tr>";
+              echo "<td>" . $room["Name"] . "</td>";
+              echo '<td><a href="' . $roomcall . '" class="btn btn-default">Join Room</a></td>';
+              echo "</td>";
+            }
+            echo "</tbody>";
+            echo "</table>";
+          }
+        ?>
       </div>
     </div>
   </body>
-</html>
+  </html>
