@@ -1,0 +1,55 @@
+   <div class="col-sm-3 col-md-2 affix-sidebar">
+        <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+          <span class="sr-only"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+          <ul class="nav navbar-nav" id="sidenav01">
+            <li class="active">
+              <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
+              <h4>
+              <span id="fullname"><?php echo $FirstName;?> <?php echo $LastName;?></span>
+              <br>
+              <small>Preferences <span class="caret"></span></small>
+              </h4>
+              </a>
+              <div class="collapse" id="toggleDemo0" style="height: 0px;">
+                <ul class="nav nav-list">
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Edit Account</a></li>
+                  <li><a href="/api/logout">Logout</a></li>
+                </ul>
+              </div>
+            </li>
+            <?php
+                $index = 1;
+                foreach($Groups as $group) {
+                    if(is_null($group)) continue;
+                    $gid = $group["ID"];
+                    $uid = $ID;
+                    echo '<li>';
+                    echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
+                    echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span></a>';
+                    echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
+                            <ul class="nav nav-list">
+                                <li><a href="/class/' . $gid . '">View Assignments</a></li>
+                                <li><a href="/api/group/removestudent?id=' . $gid . '&student=' . $uid . '">Leave Group</a></li>
+                            </ul>
+                          </div>
+                          </li>';
+                    $index++;
+                }
+            ?>
+          </ul>
+          
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+      </div>
