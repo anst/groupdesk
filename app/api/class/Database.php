@@ -7,7 +7,7 @@
 class Database {
     private static $conn;
     private static $user = "root";
-    private static $pass = "";
+    private static $pass = "password";
     private static $db = "schollab";
     private static $host = "localhost";
     

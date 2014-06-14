@@ -63,17 +63,25 @@ class RoomManager {
             $room = Room::id($id);
             
             if(is_null($room) || is_null($student)) {
-                echo "false";
+                header('Location: /');
                 return;
             }
             
+            $room->resolve();
+            $ass = $room["Assignment"];
+            $ass->resolve();
+            $group = $ass["Group"];
+            
+            $header = 'Location: /class/' . $group["ID"];
+            
             if(!$room->hasIndirect("Students", $student)) {
-                echo "false";
+                header($header);
                 return;
             }
             
             $room->removeIndirect("Students", $student);
-            echo "true";
+            
+            header($header);
         });
         
         $app->route("/api/room/students", function($app) {

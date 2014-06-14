@@ -48,7 +48,7 @@ class Room extends Object {
                 ]
             ],
             "Assignment" => [
-                "name" => "Assignments",
+                "name" => "Assignment",
                 "type" => "Direct-Parent",
                 "key" => "AssignmentID",
                 "target" => [
