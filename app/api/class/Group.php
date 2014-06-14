@@ -14,13 +14,41 @@ require_once 'Object.php';
  */
 class Group extends Object {
     public function getRelationships() {
-        return parent::getRelationships();
+        return [
+            "Teacher" => [
+                "key" => "TeacherID",
+                "name" => "Teacher",
+                "type" => "Direct-Parent",
+                "target" => [
+                    "table" => "users",
+                    "type" => "User",
+                    "key" => "ID"
+                ]
+            ],
+            "Students" => [
+                "name" => "Students",
+                "type" => "Indirect",
+                "local" => [
+                    "key" => "ID"
+                ],
+                "join" => [
+                    "localkey" => "GroupID",
+                    "remotekey" => "UserID",
+                    "table" => "groups_users"
+                ],
+                "remote" => [
+                    "key" => "ID",
+                    "table" => "users",
+                    "type" => "User"
+                ]
+            ]
+        ];
     }
     
     public static function create($creator, $name, $desc) {
         return new Group(array(
            "TeacherID" => $creator["ID"],
-            "Name" => $name,
+            "Title" => $name,
             "Description" => $desc
         ));
     }

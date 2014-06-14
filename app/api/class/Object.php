@@ -96,6 +96,10 @@ class Object implements ArrayAccess, JsonSerializable {
             }
             else if($relationship["type"] === "Direct-Children") {
                 $obj = static::grabChildren($relationship, $this[$relationship["key"]], $relationship["target"]["type"]);
+                if(is_null($obj)) {
+                    $this->setSneaky($relationship["name"], array());
+                    continue;
+                }
                 foreach($obj as $key => $value)
                     $value->resolve($depth - 1);
                 $this->setSneaky($relationship["name"], $obj);
@@ -134,10 +138,10 @@ class Object implements ArrayAccess, JsonSerializable {
         return $result;
     }
     
-    public function insert() {
+    public function insert($table = null) {
         $cols = "(";
         $vals = "(";
-        $table = $this->getTable();
+        if(is_null($table)) $table = $this->getTable();
         
         foreach($this->data as $key => $value)
         {
@@ -148,12 +152,15 @@ class Object implements ArrayAccess, JsonSerializable {
         $cols .= ")";
         $vals .= ")";
         Database::query("INSERT INTO $table $cols VALUES $vals");
+        
+        return Database::id();
     }
     
-    public function update() {
+    public function update($table = null, $uni = null) {
         $updateCore = "";
-        $table = $this->getTable();
-        $uni = $this->getUnique(); $uniVal = $this->get($uni);
+        
+        if(is_null($uni)) $table = $this->getUnique();
+        if(is_null($table)) $table = $this->getTable();
         foreach($this->data as $key => $value)
         {
             if(strcmp($key, $uni) == 0) continue; // Disallow updating the PK
@@ -162,11 +169,41 @@ class Object implements ArrayAccess, JsonSerializable {
         return Database::query("UPDATE $table SET $updateCore WHERE $uni='$uniVal'");
     }
     
-    public function delete() {
-        $uni = $this->getUnique();
+    public function delete($table = null, $uni = null) {
+        if(is_null($table)) $table = $this->getTable();
+        if(is_null($uni)) $uni = $this->getUnique();
+        
         $uniVal = $this->get($uni);
-        $table = $this->getTable();
         Database::query("DELETE FROM $table WHERE $uni='$uniVal'");
+    }
+    
+    // Now we deal with more silly stuff.
+    public function addIndirect($target, $object) {
+        $rel = $this->getRelationships()[$target];
+        
+        $inst = new Object();
+        
+        // We're not even going to check for indirects.
+        $inst->set($rel["join"]["localkey"], $this[$rel["local"]["key"]]);
+        $inst->set($rel["join"]["remotekey"], $object[$rel["remote"]["key"]]);
+        
+        $inst->insert($rel["join"]["table"]);
+    }
+    
+    public function removeIndirect($target, $object) {
+        $rel = $this->getRelationships()[$target];
+        
+        $temp = Query::create("Object", $rel["join"]["table"])->where($rel["join"]["localkey"], $this[$rel["local"]["key"]]);
+        $temp = $temp->where($rel["join"]["remotekey"], $object[$rel["remote"]["key"]]);
+        
+        $res = $temp->single();
+        
+        if(!is_null($res)) {
+            $temp->delete();
+            return true;
+        }
+        
+        return false;
     }
     
     /*

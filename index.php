@@ -13,6 +13,7 @@ $app->route("/api/user", function($app, $api_query) {
 });
 
 UserManager::addRoutes($app);
+GroupManager::addRoutes($app);
 MashapeManager::addRoutes($app);
 
 $app->run();

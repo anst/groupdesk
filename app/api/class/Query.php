@@ -25,37 +25,45 @@ class Query {
     }
     
     public function where($col, $val) {
-        $restrictions[$col] = array("type" => "AND", "val" => $val);
+        $this->restrictions[$col] = array("type" => "AND", "val" => $val);
         return $this;
     }
     
     public function explicit($sub) {
-        $restrictions[] = array("type" => "EXP", "val" => $sub);
+        $this->restrictions[] = array("type" => "EXP", "val" => $sub);
     }
     
     public function fetch() {
-        return Object::allFromQuery($this->buildQuery(), $this->type);
+        return Object::allFromQuery($this->buildQuery("SELECT *"), $this->type);
     }
     
     public function single() {
-        return Object::fromQuery($this->buildQuery(), $this->type);
+        return Object::fromQuery($this->buildQuery("SELECT *"), $this->type);
     }
     
-    protected function buildQuery() {
-        $res = "SELECT * FROM " . $this->table;
+    public function exists() {
+        return null !== $this->single();
+    }
+    
+    public function delete() {
+        return Database::query($this->buildQuery("DELETE"));
+    }
+    
+    public function buildQuery($op) {
+        $res = "$op FROM " . $this->table;
         
         if(sizeof($this->restrictions) == 0) return $res;
         
-        $res = $res . " ";
+        $res = $res . " WHERE ";
         
         $first = true;
-        foreach($restrictions as $key => $res) {
+        foreach($this->restrictions as $key => $val) {
             if(!$first) $res = $res . " AND ";
             $first = false;
-            if($res["type"] === "AND")
-                $res = $res . "`" . $key . "`" . " = " . $res["val"];
-            else if($res["type"] === "EXP")
-                $res = $res . $res["val"];
+            if($val["type"] === "AND")
+                $res = $res . "`" . $key . "`" . " = \"" . $val["val"] . "\"";
+            else if($val["type"] === "EXP")
+                $res = $res . $val["val"];
         }
         
         return $res;

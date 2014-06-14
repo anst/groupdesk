@@ -11,6 +11,8 @@ class Database {
     private static $db = "schollab";
     private static $host = "localhost";
     
+    private static $query = null;
+    
     private static function connect()
     {
         if(self::$conn != null) return;
@@ -35,8 +37,18 @@ class Database {
     {
         if(self::$conn == null)
             if(self::connect() == null) return false;
+        
+        static::$query = $query;
             
         return mysqli_query(self::$conn, $query);
+    }
+    
+    public static function last() {
+        return static::$query;
+    }
+    
+    public static function id() {
+        return mysqli_insert_id(self::$conn);
     }
     
     public static function sanitize($str)

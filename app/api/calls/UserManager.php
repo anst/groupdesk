@@ -5,6 +5,18 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/api/autoloader.php';
 class UserManager {
 
     public static function addRoutes($app) {
+        $app->route("/api/register", function($app) {
+            $name = $_GET["username"];
+            $pass = $_GET["password"];
+            $type = isset($_GET["type"]) ? $_GET["type"] : 0;
+            
+            $user = User::create($name, $pass, $type);
+            if(isset($user)) {
+                echo User::id($user->insert())->json(true);
+            } else
+                echo "null";
+        });
+        
         $app->route("/api/login", function($app) {
             $user = User::login($_GET["username"], $_GET["password"]);
             echo is_null($user) ? "null" : $user->json(true);
@@ -14,7 +26,7 @@ class UserManager {
             echo User::logout() ? "true" : "false";
         });
         
-        $app->route("/api/current", function($app) {
+        $app->route("/api/user/current", function($app) {
             $user = User::current();
             if (is_null($user)) {
                 echo "null";
@@ -23,6 +35,19 @@ class UserManager {
             }
         });
         
+        $app->route("/api/user/groups", function($app) {
+            $user = User::current();
+            if(is_null($user))
+                echo "null";
+            else
+                echo json_encode($user["Groups"]);
+        });
+        
+        $app->route("/api/user/list", function($app) {
+            $arr = User::all();
+            
+            echo json_encode($arr, JSON_PRETTY_PRINT);
+        });
         $app->route("/api/gravatar", function($app) {
             $user = User::current();
             if (is_null($user)) {
