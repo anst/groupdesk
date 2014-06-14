@@ -63,11 +63,7 @@ class RoomManager {
             $room = Room::id($id);
             
             if(is_null($room) || is_null($student)) {
-<<<<<<< HEAD
                 header('Location: /');
-=======
-                // echo "false";
->>>>>>> Other minor fixes
                 return;
             }
             
@@ -79,22 +75,12 @@ class RoomManager {
             $header = 'Location: /class/' . $group["ID"];
             
             if(!$room->hasIndirect("Students", $student)) {
-<<<<<<< HEAD
                 header($header);
-=======
-                // echo "false";
->>>>>>> Other minor fixes
                 return;
             }
             
             $room->removeIndirect("Students", $student);
-<<<<<<< HEAD
-            
             header($header);
-=======
-            // echo "true";
-            header('Location: /class/');//FIXME FIXME FIXME FIXME
->>>>>>> Other minor fixes
         });
         
         $app->route("/api/room/students", function($app) {
