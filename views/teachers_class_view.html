@@ -97,6 +97,12 @@
                     </div>';
               $index++;
         }
+        if($index==0||($index+1)%4!=0){
+          if(($index+1)%4==1){
+            echo '</div>';
+          }
+          echo '<div class="row">';
+        }
       ?>
       <a href="/assignment/<?php echo $Group["ID"]; ?>/add">
         <div class="col-sm-3">
@@ -111,6 +117,34 @@
           </div>
         </div>
       </a>
+      <?php
+        if($index==0||($index+1)%4!=0){
+          echo '</div>';
+        }
+      ?>
+      <div class="row">
+        <div class="page-header">
+          <h4>Students</h4>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            foreach($Group["Students"] as $student){
+              echo '<tr>';
+              echo '<td>' . $student["LastName"] . ", " . $student["FirstName"] . '</td>';
+              echo '<td>' . $student["Email"] . '</td>';
+              echo '</tr>';
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
