@@ -194,6 +194,15 @@ class Object implements ArrayAccess, JsonSerializable {
         echo Database::last();
     }
     
+    public function hasIndirect($target, $object) {
+        $rel = $this->getRelationships()[$target];
+        
+        $temp = Query::create("Object", $rel["join"]["table"])->where($rel["join"]["localkey"], $this[$rel["local"]["key"]]);
+        $temp = $temp->where($rel["join"]["remotekey"], $object[$rel["remote"]["key"]]);
+        
+        return $temp->exists();
+    }
+    
     public function removeIndirect($target, $object) {
         $rel = $this->getRelationships()[$target];
         

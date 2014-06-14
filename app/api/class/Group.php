@@ -41,6 +41,23 @@ class Group extends Object {
                     "table" => "users",
                     "type" => "User"
                 ]
+            ],
+            "Announcements" => [
+                "name" => "Announcements",
+                "type" => "Indirect",
+                "local" => [
+                    "key" => "ID"
+                ],
+                "join" => [
+                    "localkey" => "GroupID",
+                    "remotekey" => "AnnouncementID",
+                    "table" => "announcements_groups"
+                ],
+                "remote" => [
+                    "key" => "ID",
+                    "table" => "announcements",
+                    "type" => "Announcement"
+                ]
             ]
         ];
     }

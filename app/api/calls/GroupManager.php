@@ -39,7 +39,7 @@ class GroupManager {
             
             $group = Group::id($id);
             if(is_null($group)) {
-                echo false;
+                echo "false";
                 return;
             }
             
@@ -57,6 +57,16 @@ class GroupManager {
             $group = Group::id($groupId);
             $student = User::id($studentId);
             
+            if(is_null($group) || is_null($student)) {
+                echo "false";
+                return;
+            }
+            
+            if($group->hasIndirect("Students", $student)) {
+                echo "false";
+                return;
+            }
+            
             $group->addIndirect("Students", $student);
             
             echo "true";
@@ -69,15 +79,49 @@ class GroupManager {
             $group = Group::id($groupID);
             $student = User::id($studentID);
             
+            if(is_null($group) || is_null($student)) {
+                echo "false";
+                return;
+            }
+            
+            if(!$group->hasIndirect("Students", $student)) {
+                echo "false";
+                return;
+            }
+            
             $res = $group->removeIndirect("Students", $student);
             
             echo $res ? "true" : "false";
         });
         
+        $app->route("/api/group/students", function($app) {
+            $id = $_GET["id"];
+            
+            $group = Group::id($id);
+            
+            if(is_null($group)) {
+                echo "null";
+                return;
+            }
+            
+            $group->resolve();
+            echo json_encode($group["Students"], JSON_PRETTY_PRINT);
+        });
+        
         $app->route("/api/group/list", function($app) {
-            $arr = Group::all();
-
-            echo json_encode($arr, JSON_PRETTY_PRINT);
+            if(isset($_GET["teacher"])) {
+                $teacher = User::id($_GET["teacher"]);
+                if(is_null($teacher)) {
+                    echo "null";
+                    return;
+                }
+                
+                $teacher->resolve();
+                echo json_encode($teacher["Groups"], JSON_PRETTY_PRINT);
+            } else {
+                $arr = Group::all();
+                echo json_encode($arr, JSON_PRETTY_PRINT);
+            }
         });
     }
 }

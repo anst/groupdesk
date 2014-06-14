@@ -90,6 +90,16 @@ class User extends Object {
                         "table" => "rooms",
                         "type" => "Room"
                     )
+                ),
+                "Announcements" => array(
+                    "type" => "Direct-Children",
+                    "name" => "Announcements",
+                    "key" => "ID",
+                    "target" => [
+                        "key" => "UserID",
+                        "type" => "Announcement",
+                        "table" => "announcements"
+                    ]
                 )
             );
         } else { // Teacher; ignore admin.
