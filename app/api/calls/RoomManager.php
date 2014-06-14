@@ -80,6 +80,7 @@ class RoomManager {
             }
             
             $room->removeIndirect("Students", $student);
+
             header($header);
         });
         
