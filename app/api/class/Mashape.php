@@ -56,7 +56,7 @@ class Mashape {
             $user = $user->get('Email');
         else
             $user = "SERVER";
-        $filename = $user . "_" . $filename;
+        $filename = $user . " " . $filename;
         file_put_contents($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\temp_" . $filename, $data);
         $response = Unirest::post(
             "https://community-docverter.p.mashape.com/convert",
@@ -72,6 +72,6 @@ class Mashape {
         file_put_contents($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . "." . $format, $response->raw_body);
         unlink($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\temp_" . $filename);
         header($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . "." . $format);
-        return "\\app\\files\\" . $filename . "." . $format; 
+        return "/app/files/" . $filename . "." . $format; 
     }
 }

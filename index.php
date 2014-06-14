@@ -163,6 +163,7 @@ GroupManager::addRoutes($app);
 MashapeManager::addRoutes($app);
 RoomManager::addRoutes($app);
 AssignmentManager::addRoutes($app);
+FacebookManager::addRoutes($app);
 
 $app->run();
 ?>
