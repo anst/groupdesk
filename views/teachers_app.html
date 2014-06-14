@@ -46,19 +46,22 @@
                   </ul>
                 </div>
               </li>
-              <!-- asdf -->
-              <li>
-              <a href="#" data-toggle="collapse" data-target="#toggleDemo1" data-parent="#sidenav01" class="collapsed">
-              <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;Period 1<span class="caret pull-right"></span>
-              </a>
-              <div class="collapse" id="toggleDemo1" style="height: 0px;">
-                <ul class="nav nav-list">
-                  <li><a href="#">Edit Group</a></li>
-                  <li><a href="#">Delete Group</a></li>
-                </ul>
-              </div>
-              </li>
-              <!-- asdf -->
+            <?php
+                $index = 1;
+                foreach($Groups as $group) {
+                    echo '<li>';
+                    echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
+                    echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span>';
+                    echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
+                            <ul class="nav nav-list">
+                                <li><a href="#">Edit Group</a></li>
+                                <li><a href="#">Delete Group</a></li>
+                            </ul>
+                          </div>
+                          </li>';
+                    $index++;
+                }
+            ?>
             </ul>
           </div>
         </div>
@@ -70,21 +73,23 @@
           <h3>Teacher Dashboard</h3>
         </div><div class="row">
         <div class="col-sm-3">
-          <!-- asdf -->
-        <div class="tile-progress tile-cyan">
-          <div class="tile-header">
-            <h3 class="snip">Period 1</h3>
-          </div>
-          <div class="tile-progressbar">
-            <span data-fill="100%" style="width: 100%;"></span>
-          </div>
-          <div class="tile-footer" style="text-align:right">
-            <a href="#" class="btn btn-sm btn-primary tile-edit">Edit</a>
-            <a href="#" class="btn btn-sm btn-danger tile-delete">Delete</a>
-          </div>
-        </div>
-      </div>
-      <!-- asdf -->
+      <?php
+        foreach($Groups as $group) {
+              echo '<div class="tile-progress tile-cyan">
+                        <div class="tile-header">
+                          <h3 class="snip">' . $group["Title"] . '</h3>
+                        </div>
+                        <div class="tile-progressbar">
+                          <span data-fill="100%" style="width: 100%;"></span>
+                        </div>
+                        <div class="tile-footer" style="text-align:right">
+                          <a href="#" class="btn btn-sm btn-primary tile-edit">Edit</a>
+                          <a href="#" class="btn btn-sm btn-danger tile-delete">Delete</a>
+                        </div>
+                      </div>
+                    </div>';
+      }
+      ?>
       <div class="col-sm-3">
         <div class="tile-progress tile-add" style=" box-sizing:border-box;border: dotted 3px rgba(0,0,0,0.3);cursor:pointer ">
           <div class="tile-header tile-plus">

@@ -6,14 +6,14 @@ $app = new app('app');
 
 $app->route('/', function($app) {
 	$user = User::current(); 
-	$user->resolve();
 	if(is_null($user)) {
 		return $app->render("home.html",[]);
 	} else {
+                $user->resolve();
 		if($user["Type"] == 1) {
-			return $app->render("teachers_app.html",$user->toArray());
+			return $app->render("teachers_app.html", $user->toArray());
 		} else {
-			return $app->render("students_app.html",$user->toArray());
+			return $app->render("students_app.html", $user->toArray());
 		}
 
 	}

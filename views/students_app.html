@@ -47,18 +47,22 @@
                 </ul>
               </div>
             </li>
-            <!-- asdf -->
-            <li>
-              <a href="#" data-toggle="collapse" data-target="#toggleDemo1" data-parent="#sidenav01" class="collapsed">
-              <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;First Period AP US History<span class="caret pull-right"></span>
-              </a>
-              <div class="collapse" id="toggleDemo1" style="height: 0px;">
-                <ul class="nav nav-list">
-                  <li><a href="#">View Projects</a></li>
-                  <li><a href="#">Leave Group</a></li>
-                </ul>
-              </div>
-            </li>
+            <?php
+                $index = 1;
+                foreach($Groups as $group) {
+                    echo '<li>';
+                    echo '<a href="#" data-toggle="collapse" data-target="#toggleDemo' . $index . '" data-parent="#sidenav01" class="collapsed">';
+                    echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span>';
+                    echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
+                            <ul class="nav nav-list">
+                                <li><a href="#">View Projects</a></li>
+                                <li><a href="#">Leave Group</a></li>
+                            </ul>
+                          </div>
+                          </li>';
+                    $index++;
+                }
+            ?>
             <!-- asdf -->
           </ul>
           
@@ -74,24 +78,27 @@
         
         <div class="row">
           <!-- asdf -->
-        <div class="col-sm-3">
-        <div class="tile-progress tile-cyan">
-          <div class="tile-header">
-            <h3 class="snip">Period 1 AP US History</h3>
+        <?php
+            foreach($Groups as $group) {
+                echo '<div class="col-sm-3">
+                        <div class="tile-progress tile-cyan">
+                          <div class="tile-header">
+                            <h3 class="snip">' . $group["Title"] . '</h3>
+                          </div>
+                          <div class="tile-progressbar">
+                            <span data-fill="100%" style="width: 100%;"></span>
+                          </div>
+                          <div class="tile-footer" style="text-align:right">
+                            <a href="#" class="btn btn-sm btn-primary tile-edit">View</a>
+                            <a href="#" class="btn btn-sm btn-danger tile-delete">Leave Group</a>
+                          </div>
+                        </div>
+                      </div>';
+            }
+        ?>
+              </div>
+            </div>
           </div>
-          <div class="tile-progressbar">
-            <span data-fill="100%" style="width: 100%;"></span>
-          </div>
-          <div class="tile-footer" style="text-align:right">
-            <a href="#" class="btn btn-sm btn-primary tile-edit">View</a>
-            <a href="#" class="btn btn-sm btn-danger tile-delete">Leave Group</a>
-          </div>
-        </div>
-      </div>
-      <!-- asdf -->
-    </div>
-      </div>
-    </div>
         </div>
       </div>
     </div>

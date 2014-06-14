@@ -20,7 +20,6 @@ class User extends Object {
     
     public static function create($email, $pass, $first, $last, $school, $type = 0) {
         return new User(array(
-            "Username" => "Unused",
             "Password" => $pass,
             "FirstName" => $first,
             "LastName" => $last,
