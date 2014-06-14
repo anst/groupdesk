@@ -67,6 +67,7 @@ $app->route('/assignment/<string>/add', function($app, $classid) {
 });
 
 $app->route('/room/<string>', function($app, $roomid) {
+<<<<<<< HEAD
     $user = User::current(); 
     if(!is_null($user)) $user->resolve();
     
@@ -86,6 +87,22 @@ $app->route('/room/<string>', function($app, $roomid) {
                 return $app->render("students_room_view.html", $res);
         }
     }
+=======
+  $user = User::current(); 
+  if(!is_null($user)) $user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		$res = $user->toArray();
+		$res["Roomid"] = $roomid;
+		if($user["Type"] == 1) {
+			return $app->render("students_room_view.html",$res);
+		} else {
+			return $app->render("students_room_view.html",$res);
+		}
+
+	}
+>>>>>>> Other minor fixes
 });
 
 $app->route('/room/<string>/add', function($app, $assid) {

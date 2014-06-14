@@ -31,7 +31,7 @@ class AssignmentManager {
             header('Location: /class/' . $group["GroupID"]);
         });
         
-        $app->route("/api/group/addstudent", function($app) {
+        $app->route("/api/assignment/addstudent", function($app) {
             $assignId = $_GET["id"];
             $studentId = $_GET["student"];
             
@@ -43,7 +43,7 @@ class AssignmentManager {
             echo "true";
         });
         
-        $app->route("/api/group/removestudent", function($app) {
+        $app->route("/api/assignment/removestudent", function($app) {
             $assignID = $_GET["id"];
             $studentID = $_GET["student"];
             
