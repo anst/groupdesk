@@ -36,13 +36,18 @@ class User extends Object {
         return $user;
     }
     
-    public static function login($username, $password) {
-        $user = Query::create("User", "users")->where("Username", $username)->where("Password", $password)->single();
+    public static function loginCurrent($user) {
         if(is_null($user)) return false;
         
         $_SESSION["UserID"] = $user["ID"];
         
         return $user;
+    }
+    
+    public static function login($username, $password) {
+        $user = Query::create("User", "users")->where("Username", $username)->where("Password", $password)->single();
+        echo Database::last();
+        return static::loginCurrent($user);
     }
     
     public static function logout() {
