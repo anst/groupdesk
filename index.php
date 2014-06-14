@@ -9,5 +9,14 @@ $app->route('/', function($app) {
 $app->route('/about', function($app) { 
 	return $app->render("about.html",[]);
 });
+$app->route('/login', function($app) { 
+	return $app->render("login.html",[]);
+});
+$app->route('/teachers', function($app) { 
+	return $app->render("teachers.html",[]);
+});
+$app->route('/students', function($app) { 
+	return $app->render("students.html",[]);
+});
 $app->run();
 ?>
