@@ -39,6 +39,7 @@ $app->route('/wysiwyg', function($app) {
 });
 
 UserManager::addRoutes($app);
+MashapeManager::addRoutes($app);
 
 $app->run();
 ?>
