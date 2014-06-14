@@ -17,12 +17,24 @@ class Group extends Object {
         return parent::getRelationships();
     }
     
+    public static function create($creator, $name, $desc) {
+        return new Group(array(
+           "TeacherID" => $creator["ID"],
+            "Name" => $name,
+            "Description" => $desc
+        ));
+    }
+    
     public static function all() {
         return Object::allFromTable("groups", false, false, "Group");
     }
     
     public static function id($id) {
         return Object::fromTable("groups", "ID", $id, "Group");
+    }
+    
+    public function getTable() {
+        return "groups";
     }
 }
 

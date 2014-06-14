@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Object.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/api/autoloader.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,6 +18,42 @@ class User extends Object {
     public static $TEACHER = 1;
     public static $ADMIN = 2;
     
+    public static function create($user, $pass, $type = 0) {
+        return new User(array(
+            "Username" => $user,
+            "Password" => $pass,
+            "Type" => $type,
+            "CreatedDate" => date("Y-m-d H:i:s")
+        ));
+    }
+    
+    public static function current() {
+        if(!isset($_SESSION["UserID"])) return null;
+        
+        $user = User::id($_SESSION["UserID"]);
+        
+        // if(isset($user)) $user->resolve();
+        return $user;
+    }
+    
+    public static function login($username, $password) {
+        $user = Query::create("User", "users")->where("Username", $username)->where("Password", $password)->single();
+        if(is_null($user)) return false;
+        
+        $_SESSION["UserID"] = $user["ID"];
+        
+        return $user;
+    }
+    
+    public static function logout() {
+        if(isset($_SESSION["UserID"])) {
+            unset($_SESSION["UserID"]);
+            return true;
+        }
+        
+        return false;
+    }
+    
     public function getRelationships() {
         if($this->get("Type") == User::$STUDENT) {
             return array(
@@ -26,7 +62,7 @@ class User extends Object {
                     "local" => array("key" => "ID"),
                     "name" => "Groups",
                     "join" => array(
-                        "localkey" => "StudentID",
+                        "localkey" => "UserID",
                         "remotekey" => "GroupID",
                         "table" => "groups_users"
                     ),
@@ -59,5 +95,9 @@ class User extends Object {
     
     public static function id($id) {
         return Object::fromTable("users", "ID", $id, "User");
+    }
+    
+    public function getTable() {
+        return "users";
     }
 }
