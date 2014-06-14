@@ -193,6 +193,16 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.form-signin .top {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin .bottom {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 ::selection {
   background: rgba(0,0,0,0.1); /* Safari */
   }
