@@ -18,79 +18,6 @@ USE `schollab`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `announcements`
---
-
-DROP TABLE IF EXISTS `announcements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `announcements` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Title` varchar(50) NOT NULL DEFAULT 'Default',
-  `Content` longtext NOT NULL,
-  `UserID` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `announcements`
---
-
-LOCK TABLES `announcements` WRITE;
-/*!40000 ALTER TABLE `announcements` DISABLE KEYS */;
-/*!40000 ALTER TABLE `announcements` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `announcements_groups`
---
-
-DROP TABLE IF EXISTS `announcements_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `announcements_groups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `AnnouncementID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `announcements_groups`
---
-
-LOCK TABLES `announcements_groups` WRITE;
-/*!40000 ALTER TABLE `announcements_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `announcements_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `announcements_rooms`
---
-
-DROP TABLE IF EXISTS `announcements_rooms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `announcements_rooms` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `AnnouncementID` int(11) NOT NULL,
-  `RoomID` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `announcements_rooms`
---
-
-LOCK TABLES `announcements_rooms` WRITE;
-/*!40000 ALTER TABLE `announcements_rooms` DISABLE KEYS */;
-/*!40000 ALTER TABLE `announcements_rooms` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `assignments`
 --
 
@@ -100,12 +27,12 @@ DROP TABLE IF EXISTS `assignments`;
 CREATE TABLE `assignments` (
   `ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
+  `GroupID` int(11) NOT NULL,
   `CreationDate` datetime NOT NULL,
   `DueDate` datetime DEFAULT NULL,
   `Description` longtext NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +41,7 @@ CREATE TABLE `assignments` (
 
 LOCK TABLES `assignments` WRITE;
 /*!40000 ALTER TABLE `assignments` DISABLE KEYS */;
-INSERT INTO `assignments` VALUES (1,'Bobby',1,'2014-06-13 19:54:07','2014-06-13 19:54:07','Hello!'),(2,'Bobby',4,'2014-06-13 19:54:21','2014-06-13 19:54:21','Hello!'),(3,'Billy',21,'0000-00-00 00:00:00','0000-00-00 00:00:00','K.');
+INSERT INTO `assignments` VALUES (4,'Frederick Douglass Essay',9,'2014-06-14 16:12:26',NULL,'not implemented'),(5,'Lincoln Speech Analysis',9,'2014-06-14 16:13:04',NULL,'not implemented'),(6,'Hello',13,'2014-06-14 16:20:52',NULL,'not implemented');
 /*!40000 ALTER TABLE `assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +57,7 @@ CREATE TABLE `assignments_groups` (
   `GroupID` int(11) NOT NULL DEFAULT '-1',
   `AssignmentID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +66,6 @@ CREATE TABLE `assignments_groups` (
 
 LOCK TABLES `assignments_groups` WRITE;
 /*!40000 ALTER TABLE `assignments_groups` DISABLE KEYS */;
-INSERT INTO `assignments_groups` VALUES (1,2,1),(2,2,4),(3,2,6);
 /*!40000 ALTER TABLE `assignments_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +106,7 @@ CREATE TABLE `groups` (
   `Title` varchar(45) NOT NULL,
   `Description` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +115,7 @@ CREATE TABLE `groups` (
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (2,'4','Some Project','Goodbye'),(3,'4','Other Project','Nope'),(7,'21','AP US History','Goodbye'),(8,'21','This is a Project','Yep');
+INSERT INTO `groups` VALUES (9,'24','English III','not implemented'),(10,'24','English IV','not implemented'),(11,'24','Geometry Pre-AP','not implemented'),(12,'24','AP Calculus AB','not implemented'),(13,'24','AP Calculus BC','not implemented'),(14,'24','AP Computer Science I','not implemented'),(15,'24','Computer Science II PreAP','not implemented'),(16,'24','Computer Science Independent Study','not implemented');
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +132,7 @@ CREATE TABLE `groups_users` (
   `UserID` int(11) NOT NULL,
   `Approved` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +141,7 @@ CREATE TABLE `groups_users` (
 
 LOCK TABLES `groups_users` WRITE;
 /*!40000 ALTER TABLE `groups_users` DISABLE KEYS */;
-INSERT INTO `groups_users` VALUES (8,3,2,0),(10,3,4,0),(11,5,2,0);
+INSERT INTO `groups_users` VALUES (16,9,25,0),(17,9,26,0),(18,9,27,0),(19,10,27,0),(20,14,28,0);
 /*!40000 ALTER TABLE `groups_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +157,7 @@ CREATE TABLE `rooms` (
   `Name` varchar(45) NOT NULL DEFAULT '[Not Named]',
   `AssignmentID` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +166,7 @@ CREATE TABLE `rooms` (
 
 LOCK TABLES `rooms` WRITE;
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (1,'Hello',0),(2,'Bobby',1),(4,'Bobby',1);
+INSERT INTO `rooms` VALUES (5,'Room A',4),(6,'Room B',4),(7,'Room C',4),(8,'Room D',4),(9,'Room A',5),(10,'Room B',5),(11,'Room C',5);
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +182,7 @@ CREATE TABLE `rooms_students` (
   `RoomID` int(11) NOT NULL DEFAULT '-1',
   `UserID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +191,7 @@ CREATE TABLE `rooms_students` (
 
 LOCK TABLES `rooms_students` WRITE;
 /*!40000 ALTER TABLE `rooms_students` DISABLE KEYS */;
-INSERT INTO `rooms_students` VALUES (1,2,20),(2,2,12);
+INSERT INTO `rooms_students` VALUES (5,5,26),(7,7,25);
 /*!40000 ALTER TABLE `rooms_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +236,7 @@ CREATE TABLE `users` (
   `LastName` varchar(45) NOT NULL,
   `School` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +245,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'smith',0,'2014-06-14 02:42:52','bobby@smith.com','','',NULL),(2,'hello',0,'2014-06-14 02:43:09','bill@smith.com','Bill','Smith','Smith Academy'),(3,'smith',0,'2014-06-14 02:43:09','bobby@smith.com','','',NULL),(4,'smith',1,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(5,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(6,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(7,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(8,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(9,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(10,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(11,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(12,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(13,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(14,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(15,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(16,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(17,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(18,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(19,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(20,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(21,'hello',1,'2014-06-14 05:09:10','blacksmithgu@gmail.com','','',NULL),(22,'hello',0,'2014-06-14 09:58:36','mbot@slhs.edu','Miguel','Obregon','Seven Lakes');
+INSERT INTO `users` VALUES (24,'hello',1,'2014-06-14 16:04:59','bill@smith.com','Bill','Smith','Seven Lakes'),(25,'hello',0,'2014-06-14 16:21:13','blacksmithgu@gmail.com','Michael','Brenan','Seven Lakes'),(26,'hello',0,'2014-06-14 16:32:06','miguel.lego@yahoo.com','Miguel','Obregon','Seven Lakes'),(27,'hello',0,'2014-06-14 16:34:35','andy@sturzu.com','Andy','Sturzu','Taylor High School'),(28,'hello',0,'2014-06-14 16:46:50','keyon@keyoninfo.com','Keyon','Amirpanahi','Seven Lakes');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,4 +266,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-14  7:10:43
+-- Dump completed on 2014-06-14 11:47:31

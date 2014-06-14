@@ -11,13 +11,19 @@ class UserManager {
             $last = $_GET["last"];
             $school = $_GET["school"];
             $email = $_GET["email"];
+            $groupID = $_GET["group"];
             
             $type = isset($_GET["type"]) ? $_GET["type"] : 0;
             
             $user = User::create($email,$pass, $first, $last, $school, $type);
-            $user->insert();
+            $user_res = User::id($user->insert());
             
-            User::loginCurrent($user);
+            User::loginCurrent($user_res);
+            
+            $group = Group::id($groupID);
+            if(!is_null($group))
+                $group->addIndirect("Students", $user_res);
+            
             header("Location: /");
         });
         
