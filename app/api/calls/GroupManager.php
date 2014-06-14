@@ -61,18 +61,17 @@ class GroupManager {
             $student = User::id($studentId);
             
             if(is_null($group) || is_null($student)) {
-                // echo "false";
+                header("Location: /");
                 return;
             }
             
             if($group->hasIndirect("Students", $student)) {
-                // echo "false";
+                header("Location: /");
                 return;
             }
             
             $group->addIndirect("Students", $student);
             
-            // echo "true";
             header("Location: /");
         });
         
@@ -84,18 +83,17 @@ class GroupManager {
             $student = User::id($studentID);
             
             if(is_null($group) || is_null($student)) {
-                // echo "false";
+                header("Location: /");
                 return;
             }
             
             if(!$group->hasIndirect("Students", $student)) {
-                // echo "false";
+                header("Location: /");
                 return;
             }
             
             $res = $group->removeIndirect("Students", $student);
             
-            // echo $res ? "true" : "false";
             header("Location: /");
         });
         
@@ -105,7 +103,7 @@ class GroupManager {
             $group = Group::id($id);
             
             if(is_null($group)) {
-                echo "null";
+                header("Location: /");
                 return;
             }
             
