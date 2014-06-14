@@ -32,7 +32,7 @@ class User extends Object {
         
         $user = User::id($_SESSION["UserID"]);
         
-        // if(isset($user)) $user->resolve();
+        if(isset($user)) $user->resolve();
         return $user;
     }
     

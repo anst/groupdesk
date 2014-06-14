@@ -7,7 +7,7 @@ class UserManager {
     public static function addRoutes($app) {
         $app->route("/api/login", function($app) {
             $user = User::login($_GET["username"], $_GET["password"]);
-            echo is_null($user) ? "null" : $user->json();
+            echo is_null($user) ? "null" : $user->json(true);
         });
         
         $app->route("/api/logout", function($app) {
@@ -19,7 +19,7 @@ class UserManager {
             if(is_null($user))
                 echo "null";
             else
-                echo $user->json();
+                echo $user->json(true);
         });
     }
 
