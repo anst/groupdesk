@@ -89,6 +89,7 @@
                           <span data-fill="100%" style="width: 100%;"></span>
                         </div>
                         <div class="tile-footer" style="text-align:right">
+                          <a href="#" class="btn btn-sm btn-primary tile-edit">View</a>
                           <a href="#" class="btn btn-sm btn-primary tile-edit">Edit</a>
                           <a href="/api/group/delete?id='. $group["ID"] . '" class="btn btn-sm btn-danger tile-delete">Delete</a>
                         </div>
@@ -97,19 +98,19 @@
               $index++;
         }
       ?>
-      <div class="col-sm-3">
-        <div class="tile-progress tile-add" style=" box-sizing:border-box;border: dotted 3px rgba(0,0,0,0.3);cursor:pointer ">
-          <div class="tile-header tile-plus">
-            <h3><span class="glyphicon glyphicon-plus"></span></h3>
-            <h4>
-              Add new group
-            </h4>
-            <span>Click to create a new group to put your students in</span>
+      <a href="/add">
+        <div class="col-sm-3">
+          <div class="tile-progress tile-add" style=" box-sizing:border-box;border: dotted 3px rgba(0,0,0,0.3);cursor:pointer ">
+            <div class="tile-header tile-plus">
+              <h3><span class="glyphicon glyphicon-plus"></span></h3>
+              <h4>
+                Add new group
+              </h4>
+              <span>Click to create a new group to put your students in</span>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-      </div>
+      </a>
     </div>
   </div>
 </body>

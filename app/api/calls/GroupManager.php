@@ -13,6 +13,7 @@ class GroupManager {
                 echo "null";
             
             $group = Group::create($creator, $title, $desc);
+            $group->insert();
             
             header('Location: /');
             

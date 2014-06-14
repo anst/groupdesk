@@ -35,6 +35,20 @@ $app->route('/students', function($app) {
 	return $app->render("students.html",[]);
 });
 
+$app->route('/add', function($app) {
+  $user = User::current(); 
+  if(!is_null($user)) $user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			return $app->render("teachers_add_group.html",$user->toArray());
+		} else {
+			return $app->render("students_app.html",$user->toArray()); //probably should change this
+		}
+	}
+});
+
 $app->route('/room/<string>', function($app, $roomid) {
         $user = User::current(); 
         if(!is_null($user)) $user->resolve();
