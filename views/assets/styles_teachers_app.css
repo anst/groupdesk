@@ -180,21 +180,18 @@ border-radius: 0 0 3px 3px;
 .tile-progress.tile-cyan {
 background-color: #00b29e;
 color: #fff;
+max-height:190px;
 }
 .tile-progress.tile-add {
 background-color: rgba(0,0,0,0.05);
 color: #000;
+max-height:190px;
+}
+.tile-add {
+  height:190px;
 }
 .tile-plus{
   text-align: center;
   vertical-align: middle;
   margin: auto auto auto auto;
-}
-.tile-edit{
-  text-align: left;
-  color: #fff;
-}
-.tile-delete{
-  text-align: right;
-  color: #f00;
 }
