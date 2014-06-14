@@ -21,5 +21,8 @@ $app->route('/students', function($app) {
 $app->route('/students_app', function($app) { 
   return $app->render("students_app.html",[]);
 });
+$app->route('/teachers_app', function($app) { 
+  return $app->render("teachers_app.html",[]);
+});
 $app->run();
 ?>
