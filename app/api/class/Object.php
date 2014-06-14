@@ -4,6 +4,7 @@ require_once 'Database.php';
 
 class Object implements ArrayAccess, JsonSerializable {
     protected $data = array();
+    protected $ref = array();
     protected $changes = array();
     
     public function __construct($data = array()) {
@@ -51,11 +52,11 @@ class Object implements ArrayAccess, JsonSerializable {
     }
     
     public function offsetExists($offset) {
-        return isset($this->data[$offset]);
+        return isset($this->data[$offset]) || isset($this->ref[$offset]);
     }
 
     public function offsetGet($offset) {
-        return $this->data[$offset];
+        return isset($this->data[$offset]) ? $this->data[$offset] : $this->ref[$offset];
     }
 
     public function offsetSet($offset, $value) {
@@ -72,7 +73,7 @@ class Object implements ArrayAccess, JsonSerializable {
     }
     
     public function setSneaky($offset, $value) {
-        $this->data[$offset] = $value;
+        $this->ref[$offset] = $value;
     }
     
     public function get($offset) {
@@ -80,7 +81,7 @@ class Object implements ArrayAccess, JsonSerializable {
     }
     
     public function json($pretty = false) {
-        return json_encode($this->data, $pretty ? JSON_PRETTY_PRINT : 0);
+        return json_encode($this, $pretty ? JSON_PRETTY_PRINT : 0);
     }
     
     public function resolve($depth = 1) {
@@ -101,7 +102,8 @@ class Object implements ArrayAccess, JsonSerializable {
             }
             else if($relationship["type"] === "Indirect") {
                 $obj = static::grabJoinObject($relationship, $this[$relationship["local"]["key"]], $relationship["remote"]["type"]);
-                foreach($obj as $key => $value)
+
+                foreach($obj as $value)
                     $value->resolve($depth - 1);
                 $this->setSneaky($relationship["name"], $obj);
                 break;
@@ -120,15 +122,51 @@ class Object implements ArrayAccess, JsonSerializable {
     }
     
     public static function grabJoinObject($relationship, $variable, $type = "Object") {
-        $res = array();
+        $result = array();
         
         $temp = static::allFromTable($relationship["join"]["table"], $relationship["join"]["localkey"], $variable);
-        if(!$temp || is_null($temp)) return $res;
         
-        foreach($temp as $key => $res)
-            $res[] = static::fromTable($relationship["remote"]["table"], $relationship["remote"]["key"], $res[$relationship["join"]["remotekey"]], $type);
+        if(!$temp || is_null($temp)) return $result;
         
-        return $res;
+        foreach($temp as $res)
+            $result[] = static::fromTable($relationship["remote"]["table"], $relationship["remote"]["key"], $res[$relationship["join"]["remotekey"]], $type);
+
+        return $result;
+    }
+    
+    public function insert() {
+        $cols = "(";
+        $vals = "(";
+        $table = $this->getTable();
+        
+        foreach($this->data as $key => $value)
+        {
+            $cols .= (strlen($cols) == 1 ? "" : ",") . $key;
+            $vals .= (strlen($vals) == 1 ? "" : ",") . "'$value'";
+        }
+
+        $cols .= ")";
+        $vals .= ")";
+        Database::query("INSERT INTO $table $cols VALUES $vals");
+    }
+    
+    public function update() {
+        $updateCore = "";
+        $table = $this->getTable();
+        $uni = $this->getUnique(); $uniVal = $this->get($uni);
+        foreach($this->data as $key => $value)
+        {
+            if(strcmp($key, $uni) == 0) continue; // Disallow updating the PK
+            $updateCore .= (strlen($updateCore) == 0 ? "" : ",") . $key . "='" . Database::sanitize($value) . "'";
+        }
+        return Database::query("UPDATE $table SET $updateCore WHERE $uni='$uniVal'");
+    }
+    
+    public function delete() {
+        $uni = $this->getUnique();
+        $uniVal = $this->get($uni);
+        $table = $this->getTable();
+        Database::query("DELETE FROM $table WHERE $uni='$uniVal'");
     }
     
     /*
@@ -163,9 +201,17 @@ class Object implements ArrayAccess, JsonSerializable {
     public function getRelationships() {
         return array();
     }
+    
+    public function getUnique() {
+        return "ID";
+    }
+    
+    public function getTable() {
+        return null;
+    }
 
     public function jsonSerialize() {
-        return $this->data;
+        return array_merge($this->data, $this->ref);
     }
 }
 
