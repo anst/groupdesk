@@ -34,7 +34,24 @@ class Assignment extends Object {
                     "type" => "Room",
                     "key" => "AssignmentID"
                 )
-            )
+            ),
+            "Assignments" => [
+                "type" => "Indirect",
+                "name" => "Assignments",
+                "local" => [
+                    "key" => "ID"
+                ],
+                "join" => [
+                    "localkey" => "AssignmentID",
+                    "remotekey" => "GroupID",
+                    "table" => "assignments_groups"
+                ],
+                "remote" => [
+                    "key" => "ID",
+                    "table" => "groups",
+                    "type" => "Group"
+                ]
+            ]
         );
     }
     

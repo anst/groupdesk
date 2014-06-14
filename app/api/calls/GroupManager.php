@@ -29,7 +29,7 @@ class GroupManager {
             $group = Group::id($id);
             $group->delete();
             
-            echo Database::last();
+            Query::create("Object", "groups_users")->where("GroupID", $group["ID"])->delete();
             
             header("Location: /");
         });

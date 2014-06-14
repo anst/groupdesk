@@ -27,7 +27,7 @@ class AssignmentManager {
             $group = Assignment::id($id);
             $group->delete();
             
-            echo Database::last();
+            
             
             echo "true";
         });
