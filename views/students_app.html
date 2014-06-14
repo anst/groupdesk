@@ -27,25 +27,80 @@
         </div>
       </div>
     </div>
-
-    <div class="container body-container">
-      <div class="row">
-        <div class="col-md-2">
-          <ul class="nav nav-sidebar">
-            <li><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Groups</h5></li>
-            <li class="active"><a href="#">Class 1</a></li>
-            <li><a href="#">Class 2</a></li>
-            <li><a href="#">Class 3</a></li>
-            <li><a href="#">Class 4</a></li>
-          </ul>
+    <div class="row affix-row">
+        <div class="col-sm-3 col-md-2 affix-sidebar">
+        <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
         </div>
-        <div class="col-md-10">
-          <div class="main">
-            <h2 class="sub-header">Class 1</h2>
-            <form action="">
-              <textarea class="form-control" name="posttext"></textarea>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+          <ul class="nav navbar-nav" id="sidenav01">
+            <li class="active">
+              <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
+              <h4>
+              Control Panel
+              <br>
+              <small>IOSDSV <span class="caret"></span></small>
+              </h4>
+              </a>
+              <div class="collapse" id="toggleDemo0" style="height: 0px;">
+                <ul class="nav nav-list">
+                  <li><a href="#">ProfileSubMenu1</a></li>
+                  <li><a href="#">ProfileSubMenu2</a></li>
+                  <li><a href="#">ProfileSubMenu3</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="#" data-toggle="collapse" data-target="#toggleDemo" data-parent="#sidenav01" class="collapsed">
+              <span class="glyphicon glyphicon-cloud"></span> Submenu 1 <span class="caret pull-right"></span>
+              </a>
+              <div class="collapse" id="toggleDemo" style="height: 0px;">
+                <ul class="nav nav-list">
+                  <li><a href="#">Submenu1.1</a></li>
+                  <li><a href="#">Submenu1.2</a></li>
+                  <li><a href="#">Submenu1.3</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="#" data-toggle="collapse" data-target="#toggleDemo2" data-parent="#sidenav01" class="collapsed">
+              <span class="glyphicon glyphicon-inbox"></span> Submenu 2 <span class="caret pull-right"></span>
+              </a>
+              <div class="collapse" id="toggleDemo2" style="height: 0px;">
+                <ul class="nav nav-list">
+                  <li><a href="#">Submenu2.1</a></li>
+                  <li><a href="#">Submenu2.2</a></li>
+                  <li><a href="#">Submenu2.3</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges <span class="badge pull-right">42</span></a></li>
+            <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>
+          </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+      </div>
+      <div class="col-sm-9 col-md-10 affix-content">
+        <div class="container">
+          
+            <div class="page-header">
+      <h3><span class="glyphicon glyphicon-th-list"></span> Navigation</h3>
+    </div>
+   <form action="">
+              <textarea class="form-control" name="posttext" style="resize:vertical;"placeholder="Post any questions you have here."></textarea>
+              <div style="margin-top:20px; text-align:right;"><a href="#" class="btn btn-success">Post</a></div>
             </form>
-          </div>
+          
         </div>
       </div>
     </div>
