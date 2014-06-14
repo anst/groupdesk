@@ -54,7 +54,10 @@
                   echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
                             <ul class="nav nav-list">';
                   foreach($Rooms as $room) {
-                    echo '<li><a href="/room/' . $room["ID"] . '">' . $room["Name"] . '</a></li>';
+                    $room->resolve();
+                    $ass = $room["Assignment"];
+                    $name = $ass["Name"] . " > " . $room["Name"];
+                    echo '<li><a href="/room/' . $room["ID"] . '">' . $name . '</a></li>';
                   }
                   echo "</ul></div></li>";
                 }
