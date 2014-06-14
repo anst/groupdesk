@@ -4,7 +4,7 @@ USE `schollab`;
 --
 -- Host: localhost    Database: schollab
 -- ------------------------------------------------------
--- Server version 5.6.14
+-- Server version	5.6.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -130,7 +130,7 @@ CREATE TABLE `assignments_students` (
   `StudentID` int(11) NOT NULL DEFAULT '-1',
   `AssignmentID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,6 +139,7 @@ CREATE TABLE `assignments_students` (
 
 LOCK TABLES `assignments_students` WRITE;
 /*!40000 ALTER TABLE `assignments_students` DISABLE KEYS */;
+INSERT INTO `assignments_students` VALUES (1,2,1),(2,2,4),(3,2,6);
 /*!40000 ALTER TABLE `assignments_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +189,7 @@ CREATE TABLE `groups` (
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (2,'4','Hello','Goodbye'),(3,'4','New Title','Nope'),(4,'4','Hello','Goodbye'),(5,'4','Hello','Goodbye'),(7,'4','Hello','Goodbye'),(8,'21','Nope','Yep');
+INSERT INTO `groups` VALUES (2,'4','Some Project','Goodbye'),(3,'4','Other Project','Nope'),(4,'4','New Project','Goodbye'),(5,'4','Old Project','Goodbye'),(7,'4','AP US History','Goodbye'),(8,'21','This is a Project','Yep');
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +206,7 @@ CREATE TABLE `groups_users` (
   `UserID` int(11) NOT NULL,
   `Approved` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +215,7 @@ CREATE TABLE `groups_users` (
 
 LOCK TABLES `groups_users` WRITE;
 /*!40000 ALTER TABLE `groups_users` DISABLE KEYS */;
-INSERT INTO `groups_users` VALUES (8,3,21,0),(10,3,1,0),(11,5,1,0);
+INSERT INTO `groups_users` VALUES (8,3,2,0),(10,3,4,0),(11,5,2,0),(12,7,2,0);
 /*!40000 ALTER TABLE `groups_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +302,6 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Username` varchar(45) NOT NULL,
   `Password` varchar(45) NOT NULL,
   `Type` int(11) NOT NULL DEFAULT '0',
   `CreatedDate` datetime NOT NULL,
@@ -319,7 +319,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'bobby','smith',0,'2014-06-14 02:42:52',NULL,'','',NULL),(2,'bobby','smith',0,'2014-06-14 02:43:09',NULL,'','',NULL),(3,'bobby','smith',0,'2014-06-14 02:43:09',NULL,'','',NULL),(4,'bobby','smith',1,'2014-06-14 02:43:10',NULL,'','',NULL),(5,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(6,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(7,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(8,'bobby','smith',0,'2014-06-14 02:43:10',NULL,'','',NULL),(9,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(10,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(11,'bobby','smith',0,'2014-06-14 02:43:11',NULL,'','',NULL),(12,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(13,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(14,'bobby','smith',0,'2014-06-14 02:43:13',NULL,'','',NULL),(15,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(16,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(17,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(18,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(19,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(20,'bobby','smith',0,'2014-06-14 02:43:14',NULL,'','',NULL),(21,'blacksmithgu','hello',1,'2014-06-14 05:09:10',NULL,'','',NULL);
+INSERT INTO `users` VALUES (1,'smith',0,'2014-06-14 02:42:52','bobby@smith.com','','',NULL),(2,'hello',0,'2014-06-14 02:43:09','bill@smith.com','Bill','Smith','Smith Academy'),(3,'smith',0,'2014-06-14 02:43:09','bobby@smith.com','','',NULL),(4,'smith',1,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(5,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(6,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(7,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(8,'smith',0,'2014-06-14 02:43:10','bobby@smith.com','','',NULL),(9,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(10,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(11,'smith',0,'2014-06-14 02:43:11','bobby@smith.com','','',NULL),(12,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(13,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(14,'smith',0,'2014-06-14 02:43:13','bobby@smith.com','','',NULL),(15,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(16,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(17,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(18,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(19,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(20,'smith',0,'2014-06-14 02:43:14','bobby@smith.com','','',NULL),(21,'hello',1,'2014-06-14 05:09:10','blacksmithgu@gmail.com','','',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-14  3:18:38
+-- Dump completed on 2014-06-14  4:41:53
