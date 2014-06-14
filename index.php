@@ -18,5 +18,8 @@ $app->route('/teachers', function($app) {
 $app->route('/students', function($app) { 
 	return $app->render("students.html",[]);
 });
+$app->route('/students_app', function($app) { 
+  return $app->render("students_app.html",[]);
+});
 $app->run();
 ?>

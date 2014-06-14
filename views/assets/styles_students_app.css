@@ -1,0 +1,17 @@
+body {
+  padding-top: 70px;
+}
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-sidebar > .active > a {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.main {
+  margin-top: -20px;
+}
