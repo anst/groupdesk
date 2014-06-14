@@ -190,6 +190,8 @@ class Object implements ArrayAccess, JsonSerializable {
         $inst->set($rel["join"]["remotekey"], $object[$rel["remote"]["key"]]);
         
         $inst->insert($rel["join"]["table"]);
+        
+        echo Database::last();
     }
     
     public function removeIndirect($target, $object) {
