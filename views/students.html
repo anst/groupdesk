@@ -6,6 +6,16 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <?php require_once 'head.html'; ?>
     <link href="/views/assets/styles_home.css" rel="stylesheet">
+    <script>
+        $(function() {
+            $.getJSON( "/api/school", {name: ""}, function( data ) {
+                $( "#autoschool" ).autocomplete({
+                    source: data,
+                    minLength: 5
+                });
+            });
+        });
+    </script>
   </head>
   <body>
   	 <div class="site-wrapper">
@@ -31,7 +41,7 @@
             <form class="form-signin" method="GET" action="/api/register" role="form" style="opacity:.8">
               <input type="text" name="first" class="form-control top" placeholder="First Name" required autofocus>
               <input type="text" name="last" class="form-control bottom" placeholder="Last Name" required>
-              <input type="text" name="school"  style="margin-bottom:10px;"class="form-control" placeholder="School" required>
+              <input id="autoschool" type="text" name="school"  style="margin-bottom:10px;"class="form-control" placeholder="School" required>
               <input type="email" name="email" class="form-control" placeholder="Email address" required>
               <input type="password" name="password" class="form-control" placeholder="Password" required>
               <input type="text" name="code" class="form-control" style="margin-bottom:10px;" placeholder="Teacher Code" required>

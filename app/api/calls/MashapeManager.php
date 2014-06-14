@@ -6,7 +6,7 @@ class MashapeManager {
 
     public static function addRoutes($app) {
         $app->route("/api/school", function($app) {
-            if (!isset($_GET['name']) || strlen($_GET['name']) < 5) {
+            if (!isset($_GET['name'])) {
                 return;
             }
             Mashape::retrieveSchools();
@@ -18,7 +18,7 @@ class MashapeManager {
                 return;
             }
             $url = Mashape::convertFile($_GET['name'], $_GET['data']);
-            echo json_encode(array("url" => $url));
+            echo $url;
         });
     }
 

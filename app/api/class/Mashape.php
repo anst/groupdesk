@@ -36,6 +36,8 @@ class Mashape {
     
     public static function getMatchingSchools($str)
     {
+        if(strcmp($str,"") === 0)
+            return self::$schools;
         $match = array();
         foreach(self::$schools as $key => $value)
         {
@@ -47,10 +49,14 @@ class Mashape {
         return $match;
     }
     
-    public static function convertFile($filename, $data)
+    public static function convertFile($filename, $data, $format = "pdf")
     {
         $user = User::current();
-        $filename = $user->get('Username') . "_" . $filename;
+        if(!is_null($user))
+            $user = $user->get('Email');
+        else
+            $user = "SERVER";
+        $filename = $user . "_" . $filename;
         file_put_contents($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\temp_" . $filename, $data);
         $response = Unirest::post(
             "https://community-docverter.p.mashape.com/convert",
@@ -58,14 +64,14 @@ class Mashape {
               "X-Mashape-Authorization" => self::API_KEY
             ),
             array(
-              "from" => "markdown",
-              "to" => "docx",
+              "from" => "html",
+              "to" => $format,
               "input_files[]" => "@" . $_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\temp_" . $filename
             )
         );
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . ".docx", $response->raw_body);
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . "." . $format, $response->raw_body);
         unlink($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\temp_" . $filename);
-        header($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . ".docx");
-        return "\\app\\files\\" . $filename . ".docx";
+        header($_SERVER['DOCUMENT_ROOT'] . "\\app\\files\\" . $filename . "." . $format);
+        return "\\app\\files\\" . $filename . "." . $format; 
     }
 }
