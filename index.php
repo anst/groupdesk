@@ -35,16 +35,34 @@ $app->route('/students', function($app) {
 	return $app->render("students.html",[]);
 });
 
-$app->route('/teachers_app', function($app) { 
-  return $app->render("teachers_app.html",[]);
+$app->route('/room/<string>', function($app, $roomid) {
+	$user = User::current(); 
+	$user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			return $app->render("teachers_app.html",$user->toArray());
+		} else {
+			return $app->render("students_room_view.html",$user->toArray());
+		}
+
+	}
 });
 
-$app->route('/students_app/room', function($app) { 
-  return $app->render("students_room_view.html",[]);
-});
+$app->route('/class/<string>', function($app, $classid) { 
+	$user = User::current(); 
+	$user->resolve();
+	if(is_null($user)) {
+		return $app->render("home.html",[]);
+	} else {
+		if($user["Type"] == 1) {
+			return $app->render("teachers_app.html",$user->toArray());
+		} else {
+			return $app->render("students_class_view.html",$user->toArray());
+		}
 
-$app->route('/students_class', function($app) { 
-  return $app->render("students_class_view.html",[]);
+	}
 });
 
 $app->route('/wysiwyg', function($app) { 
