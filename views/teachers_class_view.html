@@ -17,7 +17,6 @@
       </div>
     </div>
   <div class="row affix-row">
-    <?php require_once 'teacher_sidebar.html'; ?>
     <div class="col-sm-3 col-md-2 affix-sidebar">
       <div class="sidebar-nav">
         <div class="navbar navbar-default" role="navigation">
@@ -56,7 +55,8 @@
                     echo '<span class="glyphicon glyphicon-th"></span>      ' . $group["Title"] . '<span class="caret pull-right"></span></a>';
                     echo '<div class="collapse" id="toggleDemo' . $index . '" style="height: 0px;">
                             <ul class="nav nav-list">
-                                <li><a href="/class/' . $group["ID"] . '">Edit Group</a></li>
+                                <li><a href="/classes/' . $group["ID"] . '">View Group</a></li>
+                                <li><a href="#">Edit Group</a></li>
                                 <li><a href="/api/group/delete?id=' . $group["ID"] . '">Delete Group</a></li>
                             </ul>
                           </div>
@@ -68,44 +68,45 @@
           </div>
         </div>
       </div>
-    </div>\
+    </div>
     <div class="col-sm-9 col-md-10 affix-content">
       <div class="container">
         <div class="page-header">
-          <h3>Teacher Dashboard</h3>
+          <h3><?php echo $Group["Title"]?></h3>
         </div><div class="row">
       <?php
         $index = 0;
-        foreach($Groups as $group) {
+        foreach($Group["Assignments"] as $group) {
             if(is_null($group)) continue;
               if($index % 4 === 0 && $index != 0)
                 echo '</div><div class="row">';
               echo '<div class="col-sm-3">
                     <div class="tile-progress tile-cyan">
                         <div class="tile-header">
-                          <h3 class="snip">' . $group["Title"] . '</h3>
+                          <h3 class="snip">' . $group["Name"] . '</h3>
                         </div>
                         <div class="tile-progressbar">
                           <span data-fill="100%" style="width: 100%;"></span>
                         </div>
                         <div class="tile-footer" style="text-align:right">
-                          <a href="/class/' . $group["ID"]. '" class="btn btn-sm btn-primary tile-edit">Edit</a>
-                          <a href="/api/group/delete?id='. $group["ID"] . '" class="btn btn-sm btn-danger tile-delete">Delete</a>
+                          <a href="#" class="btn btn-sm btn-primary tile-edit">View</a>
+                          <a href="#" class="btn btn-sm btn-primary tile-edit">Edit</a>
+                          <a href="/api/assignment/delete?id='. $group["ID"] . '" class="btn btn-sm btn-danger tile-delete">Delete</a>
                         </div>
                       </div>
                     </div>';
               $index++;
         }
       ?>
-      <a href="/class/add">
+      <a href="/assignment/<?php echo $Group["ID"]; ?>/add">
         <div class="col-sm-3">
           <div class="tile-progress tile-add" style=" box-sizing:border-box;border: dotted 3px rgba(0,0,0,0.3);cursor:pointer ">
             <div class="tile-header tile-plus">
               <h3><span class="glyphicon glyphicon-plus"></span></h3>
               <h4>
-                Add new group
+                Add new assignment
               </h4>
-              <span>Click to create a new group to put your students in</span>
+              <span>Click to create a new assignment to put your students in</span>
             </div>
           </div>
         </div>

@@ -120,7 +120,6 @@ class Object implements ArrayAccess, JsonSerializable {
                 }
                 
                 $this->setSneaky($relationship["name"], $obj);
-                break;
             } else {
                 echo $relationship["type"];
             }

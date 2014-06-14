@@ -44,17 +44,10 @@ class Group extends Object {
             ],
             "Assignments" => [
                 "name" => "Assignments",
-                "type" => "Indirect",
-                "local" => [
-                    "key" => "ID"
-                ],
-                "join" => [
-                    "localkey" => "GroupID",
-                    "remotekey" => "AssignmentID",
-                    "table" => "assignments_groups"
-                ],
-                "remote" => [
-                    "key" => "ID",
+                "type" => "Direct-Children",
+                "key" => "ID",
+                "target" => [
+                    "key" => "GroupID",
                     "table" => "assignments",
                     "type" => "Assignment"
                 ]

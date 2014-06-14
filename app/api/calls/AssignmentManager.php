@@ -3,22 +3,23 @@
 class AssignmentManager {
     public static function addRoutes($app) {
         $app->route("/api/assignment/create", function($app) {
-            $creatorID = $_GET["teacher"];
+            $groupID = $_GET["group"];
             $name = $_GET["name"];
             $desc = $_GET["desc"];
-            $dueDate = $_GET["due"];
+            $dueDate = null;
             
-            $creator = User::id($creatorID);
+            $group = User::id($groupID);
             
-            if(is_null($creator))
+            if(is_null($group)) 
+            {
                 echo "null";
+                return;
+            }
             
-            $assign = Assignment::create($creator, $name, $desc, $dueDate);
-            
-            if(isset($assign))
-                echo Assignment::id($assign->insert())->json(true);
-            else
-                echo "null";
+            $assign = Assignment::create($group, $name, $desc, $dueDate);
+            $assign->insert();
+
+            header('Location: /class/' . $groupID);
         });
         
         $app->route("/api/assignment/delete", function($app) {
@@ -27,9 +28,7 @@ class AssignmentManager {
             $group = Assignment::id($id);
             $group->delete();
             
-            
-            
-            echo "true";
+            header('Location: /class/' . $group["GroupID"]);
         });
         
         $app->route("/api/group/addstudent", function($app) {

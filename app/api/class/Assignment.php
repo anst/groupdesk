@@ -15,16 +15,6 @@ require_once 'Object.php';
 class Assignment extends Object {
     public function getRelationships() {
         return array(
-            "Teacher" => array(
-                "type" => "Direct-Parent",
-                "name" => "Teacher",
-                "key" => "TeacherID",
-                "target" => array(
-                    "key" => "ID",
-                    "table" => "users",
-                    "type" => "Object"
-                )
-            ),
             "Rooms" => array(
                 "type" => "Direct-Children",
                 "name" => "Rooms",
@@ -35,18 +25,11 @@ class Assignment extends Object {
                     "key" => "AssignmentID"
                 )
             ),
-            "Assignments" => [
-                "type" => "Indirect",
-                "name" => "Assignments",
-                "local" => [
-                    "key" => "ID"
-                ],
-                "join" => [
-                    "localkey" => "AssignmentID",
-                    "remotekey" => "GroupID",
-                    "table" => "assignments_groups"
-                ],
-                "remote" => [
+            "Group" => [
+                "type" => "Direct-Parent",
+                "name" => "Group",
+                "key" => "GroupID",
+                "target" => [
                     "key" => "ID",
                     "table" => "groups",
                     "type" => "Group"
@@ -55,10 +38,10 @@ class Assignment extends Object {
         );
     }
     
-    public static function create($creator, $name, $desc, $dueDate = null) {
+    public static function create($group, $name, $desc, $dueDate = null) {
         return new Assignment(array(
            "Name" => $name,
-           "TeacherID" => $creator,
+           "GroupID" => $group["ID"],
            "CreationDate" => date("Y-m-d H:i:s"),
             "DueDate" => $dueDate,
             "Description" => $desc
