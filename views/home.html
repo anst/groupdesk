@@ -6,9 +6,18 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <?php require_once 'head.html'; ?>
     <link href="/views/assets/styles_home.css" rel="stylesheet">
+    <link rel="canonical" href="http://sohacks-dev0.rhcloud.com">
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1509224432623385&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
   </head>
   <body>
-  	 <div class="site-wrapper">
+    <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
 
@@ -41,11 +50,29 @@
           <div class="mastfoot">
             <div class="inner">
               <p>GroupDesk &copy; Meltdown Tech 2014. Product of <a href="http://sohacks.com">SOHacks</a>.</p>
+
+
+              <div class="g-plusone" data-size="medium"></div>
+              <div style="position: relative; bottom: 5px; right: 16px;" class="fb-like" data-href="http://sohacks-dev0.rhcloud.com" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-via="twitterapi" data-lang="en">Tweet</a>
+              
+              <script type="text/javascript">
+                (function() {
+                  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                  po.src = 'https://apis.google.com/js/platform.js';
+                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+              </script>
+              
+              
+              
             </div>
           </div>
 
         </div>
 
       </div>
+    </div>
   </body>
 </html>
