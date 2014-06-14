@@ -24,5 +24,8 @@ $app->route('/students_app', function($app) {
 $app->route('/teachers_app', function($app) { 
   return $app->render("teachers_app.html",[]);
 });
+$app->route('/wysiwyg', function($app) { 
+  return $app->render("wysiwyg.html",[]);
+});
 $app->run();
 ?>
