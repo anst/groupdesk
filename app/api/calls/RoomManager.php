@@ -44,6 +44,11 @@ class RoomManager {
                 return;
             }
             
+            if($room->hasIndirect("Students", $student)) {
+                echo "false";
+                return false;
+            }
+            
             $room->addIndirect("Students", $student);
             echo "true";
         });
@@ -56,6 +61,11 @@ class RoomManager {
             $room = Room::id($id);
             
             if(is_null($room) || is_null($student)) {
+                echo "false";
+                return;
+            }
+            
+            if(!$room->hasIndirect("Students", $student)) {
                 echo "false";
                 return;
             }
@@ -78,9 +88,32 @@ class RoomManager {
         });
         
         $app->route("/api/room/list", function($app) {
-            $arr = Room::all();
+            if(isset($_GET["assignment"])) {
+                $assignment = Assignment::id($_GET["assignment"]);
+                
+                if(is_null($assignment)) {
+                    echo "null";
+                    return;
+                }
+                
+                echo json_encode($assignment["Rooms"], JSON_PRETTY_PRINT);
+            } else {
+                $arr = Room::all();
+                echo json_encode($arr, JSON_PRETTY_PRINT);
+            }
+        });
+        
+        $app->route("/api/room/announcements", function($app) {
+            $id = $_GET["id"];
             
-            echo json_encode($arr, JSON_PRETTY_PRINT);
+            $room = Room::id($id);
+            if(is_null($room)) {
+                echo "null";
+                return;
+            }
+            
+            $room->resolve();
+            echo json_encode($room["Announcements"], JSON_PRETTY_PRINT);
         });
     }
 }

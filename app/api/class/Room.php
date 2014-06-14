@@ -30,6 +30,23 @@ class Room extends Object {
                     "type" => "User"
                 ]
             ],
+            "Announcements" => [
+                "name" => "Announcements",
+                "type" => "Indirect",
+                "local" => [
+                    "key" => "ID"
+                ],
+                "join" => [
+                    "localkey" => "RoomID",
+                    "remotekey" => "AnnouncementID",
+                    "table" => "announcements_rooms"
+                ],
+                "remote" => [
+                    "key" => "ID",
+                    "table" => "announcements",
+                    "type" => "Announcement"
+                ]
+            ],
             "Assignment" => [
                 "name" => "Assignments",
                 "type" => "Direct-Parent",
