@@ -62,7 +62,7 @@
         </div>
       </div> 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><i class="glyphicon glyphicon-folder-open"></i><b>&nbsp;&nbsp;&nbsp;File Browser</b></h3>
@@ -80,103 +80,23 @@
             </div>
         </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="glyphicon glyphicon-edit"></i><b>&nbsp;&nbsp;&nbsp;Users Online</b></h3>
+            </div>
+            <div class="panel-body">
+                <div id="userlist"></div>
+            </div>
+        </div>            
+        </div>
+        <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><i class="glyphicon glyphicon-edit"></i><b>&nbsp;&nbsp;&nbsp;Collaborative Editing</b></h3>
             </div>
             <div class="panel-body">
-                 <div id="firepad"></div>
-
-                <script>
-                  //// Initialize Firebase.
-                  // TODO: Replace above line with:
-                  var firepadRef = new Firebase('https://schollab.firebaseio.com/firepads/test');
-
-                  //// Create CodeMirror (with lineWrapping on).
-                  var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
-
-                  //// Create Firepad (with rich text toolbar and shortcuts enabled).
-                  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-                      { richTextToolbar: true, richTextShortcuts: true });
-
-                  //// Initialize contents.
-                  firepad.on('ready', function() {
-                    if (firepad.isHistoryEmpty()) {
-                      firepad.setHtml(
-                          '<span style="font-size: 24px;">Rich-text editing with <span style="color: red">Firepad!</span></span><br/>\n' +
-                          '<br/>' +
-                          '<div style="font-size: 18px">' +
-                          'Supports:<br/>' +
-                          '<ul>' +
-                            '<li>Different ' +
-                              '<span style="font-family: impact">fonts,</span>' +
-                              '<span style="font-size: 24px;"> sizes, </span>' +
-                              '<span style="color: blue">and colors.</span>' +
-                            '</li>' +
-                            '<li>' +
-                              '<b>Bold, </b>' +
-                              '<i>italic, </i>' +
-                              '<u>and underline.</u>' +
-                            '</li>' +
-                            '<li>Lists' +
-                              '<ol>' +
-                                '<li>One</li>' +
-                                '<li>Two</li>' +
-                              '</ol>' +
-                            '</li>' +
-                            '<li>Undo / redo</li>' +
-                            '<li>Cursor / selection synchronization.</li>' +
-                            '<li><checkbox></checkbox> It supports customized entities.</li>' +
-                            '<li>And it\'s all fully collaborative!</li>' +
-                          '</ul>' +
-                          '</div>');
-                    }
-                  });
-
-                  // An example of a complex custom entity.
-                  firepad.registerEntity('checkbox', {
-                    render: function (info, entityHandler) {
-                      var inputElement = document.createElement('input');
-                      inputElement.setAttribute('type', 'checkbox');
-                      if(info.checked) {
-                        inputElement.checked = 'checked';
-                      }
-                      inputElement.addEventListener('click', function () {
-                        entityHandler.replace({checked:this.checked});
-                      });
-                      return inputElement;
-                    }.bind(this),
-                    fromElement: function (element) {
-                      var info = {};
-                      if(element.hasAttribute('checked')) {
-                        info.checked = true;
-                      }
-                      return info;
-                    },
-                    update: function (info, element) {
-                      if (info.checked) {
-                        element.checked = 'checked';
-                      } else {
-                        element.checked = null;
-                      }
-                    },
-                    export: function (info) {
-                      var inputElement = document.createElement('checkbox');
-                      if(info.checked) {
-                        inputElement.setAttribute('checked', true);
-                      }
-                      return inputElement;
-                    }
-                  });
-                  
-                  $("#main-essay-download-button").click(function () {
-                    $.get( "/api/convert", { name: "Test", data: firepad.getHtml() }, function( data ) {
-                        window.location.href = data;
-                    });
-                  });
-                </script>
-
+                <div id="firepad"></div>
             </div>
         </div>            
         </div>
@@ -205,5 +125,104 @@
         </div>
       </div>
     </div>
+    <script>
+    //// Initialize Firebase.
+    // TODO: Replace above line with:
+    var firepadRef = new Firebase('https://schollab.firebaseio.com/firepads/test');
+
+    //// Create CodeMirror (with lineWrapping on).
+    var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+
+    // Create a random ID to use as our user ID (we must give this to firepad and FirepadUserList).
+    var userId = Math.floor(Math.random() * 9999999999).toString();
+
+    //// Create Firepad (with rich text features and our desired userId).
+    var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+    { richTextToolbar: true, richTextShortcuts: true, userId: userId});
+
+    //// Create FirepadUserList (with our desired userId).
+    var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
+    document.getElementById('userlist'), userId);
+
+    //// Initialize contents.
+    firepad.on('ready', function() {
+    if (firepad.isHistoryEmpty()) {
+    firepad.setHtml(
+      '<span style="font-size: 24px;">Rich-text editing with <span style="color: red">Firepad!</span></span><br/>\n' +
+      '<br/>' +
+      '<div style="font-size: 18px">' +
+      'Supports:<br/>' +
+      '<ul>' +
+        '<li>Different ' +
+          '<span style="font-family: impact">fonts,</span>' +
+          '<span style="font-size: 24px;"> sizes, </span>' +
+          '<span style="color: blue">and colors.</span>' +
+        '</li>' +
+        '<li>' +
+          '<b>Bold, </b>' +
+          '<i>italic, </i>' +
+          '<u>and underline.</u>' +
+        '</li>' +
+        '<li>Lists' +
+          '<ol>' +
+            '<li>One</li>' +
+            '<li>Two</li>' +
+          '</ol>' +
+        '</li>' +
+        '<li>Undo / redo</li>' +
+        '<li>Cursor / selection synchronization.</li>' +
+        '<li><checkbox></checkbox> It supports customized entities.</li>' +
+        '<li>And it\'s all fully collaborative!</li>' +
+      '</ul>' +
+      '</div>');
+    }
+    });
+
+    // An example of a complex custom entity.
+    firepad.registerEntity('checkbox', {
+    render: function (info, entityHandler) {
+    var inputElement = document.createElement('input');
+    inputElement.setAttribute('type', 'checkbox');
+    if(info.checked) {
+    inputElement.checked = 'checked';
+    }
+    inputElement.addEventListener('click', function () {
+    entityHandler.replace({checked:this.checked});
+    });
+    return inputElement;
+    }.bind(this),
+    fromElement: function (element) {
+    var info = {};
+    if(element.hasAttribute('checked')) {
+    info.checked = true;
+    }
+    return info;
+    },
+    update: function (info, element) {
+    if (info.checked) {
+    element.checked = 'checked';
+    } else {
+    element.checked = null;
+    }
+    },
+    export: function (info) {
+    var inputElement = document.createElement('checkbox');
+    if(info.checked) {
+    inputElement.setAttribute('checked', true);
+    }
+    return inputElement;
+    }
+    });
+
+    $("#main-essay-download-button").click(function () {
+        $.get( "/api/convert", { name: "Test", data: firepad.getHtml() }, function( data ) {
+        window.location.href = data;
+        });
+    });
+    
+    $(".firepad-userlist-name-input").prop('disabled', true);
+    $(".firepad-userlist-name-input").val("<?php echo $FirstName;?> <?php echo $LastName;?>");
+    
+    </script>
   </body>
 </html>

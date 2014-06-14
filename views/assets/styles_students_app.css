@@ -207,6 +207,16 @@ max-height:190px;
   display: inline-block;
 }
 
-.powered-by-firepad {
+.powered-by-firepad, .firepad-userlist-heading, .firepad-userlist-name-hint {
   display:none;
 }
+
+.firepad-userlist {
+    position: relative;
+    top: 0px;
+}
+
+.firepad-userlist-users {
+    top: 0px;
+}
+
