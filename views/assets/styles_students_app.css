@@ -194,3 +194,14 @@ max-height:190px;
   vertical-align: middle;
   margin: auto auto auto auto;
 }
+
+.tile-header {
+  height: 115px;
+}
+
+.tile-header h3{
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
