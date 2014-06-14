@@ -30,8 +30,12 @@ $app->route('/students_app/room', function($app) {
 $app->route('/students_class', function($app) { 
   return $app->render("students_class_view.html",[]);
 });
+
+$app->route("/api/user", function($app, $api_query) {
+    
 $app->route('/wysiwyg', function($app) { 
   return $app->render("wysiwyg.html",[]);
 });
+
 $app->run();
 ?>
