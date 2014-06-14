@@ -43,7 +43,6 @@ class Assignment extends Object {
            "Name" => $name,
            "GroupID" => $group["ID"],
            "CreationDate" => date("Y-m-d H:i:s"),
-            "DueDate" => $dueDate,
             "Description" => $desc
         ));
     }

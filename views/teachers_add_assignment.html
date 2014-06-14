@@ -24,7 +24,7 @@
         </div>
         <form class="form" method="GET" action="/api/assignment/create" role="form">
           <input id="Title" type="text" name="name" class="form-control" placeholder="Title" autofocus>
-          <input id="GroupID" type="hidden" name="group" class="form-control" value="<?php echo $classid?>">
+          <input id="GroupID" type="hidden" name="group" class="form-control" value="<?php echo $classid; ?>">
           <input id="Description" type="hidden" name="desc" class="form-control" value="not implemented">
           <br>
           <button class="btn btn-sm btn-primary btn-block" type="submit">Create assignment</button>

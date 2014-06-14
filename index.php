@@ -67,18 +67,25 @@ $app->route('/assignment/<string>/add', function($app, $classid) {
 });
 
 $app->route('/room/<string>', function($app, $roomid) {
-  $user = User::current(); 
-  if(!is_null($user)) $user->resolve();
-	if(is_null($user)) {
-		return $app->render("home.html",[]);
-	} else {
-		if($user["Type"] == 1) {
-			return $app->render("students_room_view.html",$user->toArray());
-		} else {
-			return $app->render("students_room_view.html",$user->toArray());
-		}
-
-	}
+    $user = User::current(); 
+    if(!is_null($user)) $user->resolve();
+    
+    if(is_null($user)) {
+            return $app->render("home.html",[]);
+    } else {
+        $res = $user->toArray();
+        $room = Room::id($roomid);
+        if(isset($room)) {
+            $room->resolve();
+            $res["Room"] = $room->toArray();
+        }
+        
+        if($user["Type"] == 1) {
+                return $app->render("students_room_view.html", $res);
+        } else {
+                return $app->render("students_room_view.html", $res);
+        }
+    }
 });
 
 $app->route('/room/<string>/add', function($app, $assid) {

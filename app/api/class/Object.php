@@ -91,6 +91,10 @@ class Object implements ArrayAccess, JsonSerializable {
             if($relationship["type"] === "Direct-Parent") {
                 $obj = static::grabObject($relationship, $this->get($relationship["key"]), $relationship["target"]["type"]);
 
+                if(is_null($obj)) {
+                    $this->setSneaky($relationship["name"], null);
+                    continue;
+                }
                 $obj->resolve($depth - 1);
                 $this->setSneaky($relationship["name"], $obj);
             }

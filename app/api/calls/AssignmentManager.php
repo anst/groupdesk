@@ -8,17 +8,17 @@ class AssignmentManager {
             $desc = $_GET["desc"];
             $dueDate = null;
             
-            $group = User::id($groupID);
+            $group = Group::id($groupID);
             
             if(is_null($group)) 
             {
-                echo "null";
+                header('Location: /class/' . $groupID);
                 return;
             }
             
             $assign = Assignment::create($group, $name, $desc, $dueDate);
             $assign->insert();
-
+            
             header('Location: /class/' . $groupID);
         });
         
