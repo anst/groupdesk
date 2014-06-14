@@ -31,6 +31,25 @@ class GroupManager {
             echo "true";
         });
         
+        $app->route("/api/group/update", function($app) {
+            $title = $_GET["title"];
+            $desc = $_GET["desc"];
+            
+            $id = $_GET["id"];
+            
+            $group = Group::id($id);
+            if(is_null($group)) {
+                echo false;
+                return;
+            }
+            
+            $group["Title"] = $title;
+            $group["Description"] = $desc;
+            
+            $group->update();
+            echo "true";
+        });
+        
         $app->route("/api/group/addstudent", function($app) {
             $groupId = $_GET["id"];
             $studentId = $_GET["student"];
