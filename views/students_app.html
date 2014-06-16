@@ -5,7 +5,6 @@
     <title>GroupDesk</title>
     <!-- Sets initial viewport load and disables zooming  -->
     <?php require_once 'head.html'; ?>
-    <link href="/views/assets/styles_students_app.css" rel="stylesheet">
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -32,11 +31,11 @@
                     $uid = $ID;
                     echo '
                     <div class="col-sm-3">
-                        <div class="tile-progress tile-cyan">
+                        <div class="tile tile-item">
                           <div class="tile-header">
                             <h3 class="snip">' . $group["Title"] . '</h3>
                           </div>
-                          <div class="tile-progressbar">
+                          <div class="tilebar">
                             <span data-fill="100%" style="width: 100%;"></span>
                           </div>
                           <div class="tile-footer" style="text-align:right">

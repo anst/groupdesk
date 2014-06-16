@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html class="landing">
   <head>
     <meta charset="utf-8">
     <title>GroupDesk - The Student's Way To Collaborate</title>
     <!-- Sets initial viewport load and disables zooming  -->
     <?php require_once 'head.html'; ?>
-    <link href="/views/assets/styles_home.css" rel="stylesheet">
     <script>
         $(function() {
             $.getJSON( "/api/school", {name: ""}, function( data ) {
