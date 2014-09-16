@@ -19,8 +19,11 @@ class User extends Object {
     public static $ADMIN = 2;
     
     public static function create($email, $pass, $first, $last, $school, $type = 0) {
+        $salt = openssl_random_pseudo_bytes(32);
+        $pass = hash("sha256", $salt . $pass, false);
         return new User(array(
             "Password" => $pass,
+            "Salt" => $salt,
             "FirstName" => $first,
             "LastName" => $last,
             "Type" => $type,
@@ -48,6 +51,9 @@ class User extends Object {
     }
     
     public static function login($username, $password) {
+        $user = Query::create("User", "users")->where("Email", $username)->single();
+        $password = hash("sha256", $user["Salt"] . $password, false);
+
         $user = Query::create("User", "users")->where("Email", $username)->where("Password", $password)->single();
         return static::loginCurrent($user);
     }
