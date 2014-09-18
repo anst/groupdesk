@@ -19,8 +19,9 @@ class User extends Object {
     public static $ADMIN = 2;
     
     public static function create($email, $pass, $first, $last, $school, $type = 0) {
+        $hash = password_hash($pass, PASSWORD_BCRYPT);
         return new User(array(
-            "Password" => $pass,
+            "Password" => $hash,
             "FirstName" => $first,
             "LastName" => $last,
             "Type" => $type,
@@ -48,7 +49,10 @@ class User extends Object {
     }
     
     public static function login($username, $password) {
-        $user = Query::create("User", "users")->where("Email", $username)->where("Password", $password)->single();
+        $temp_user = Query::create("User", "users")->where("Email", $username)->single();
+        $user = null;
+        if(password_verify($password, $temp_user["Password"]))
+            $user = $temp_user;
         return static::loginCurrent($user);
     }
     
